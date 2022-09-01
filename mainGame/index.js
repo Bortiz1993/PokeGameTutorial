@@ -34,9 +34,44 @@ c.drawImage
  //the equation above cuts the sprite sheet into one animation and it centers the character on the center coordinate?
 }
 
+//everytime i make a different reference to sprite, it will be different thats why this Class is here.
+class Sprite {
+    constructor( {position,velocity, image}){
+        this.position = position
+        this.image = image
+    }
+    //what code do i need to use to draw something in the canvas.
+    draw(){
+        c.drawImage(this.image, -785, -650);
+    }
+}
+
+const background = new Sprite({
+    position: {
+        x: -785,
+        y: -650
+    },
+    image: image
+})
+
+const keys = {
+    w:{
+        pressed: false
+    },
+    a:{
+        pressed: false
+    },
+    s:{
+        pressed: false
+    },
+    d:{
+        pressed: false
+    }
+}
+
 function animate(){
     window.requestAnimationFrame(animate)
-    c.drawImage(image, -215, -400);
+    background.draw
 //Player down and canvas width divided by x coordinate 2 and y coordinate 0.
 c.drawImage
 (playerImageDown,
@@ -49,7 +84,9 @@ c.drawImage
  playerImageDown.width/ 4,
  playerImageDown.height
  )
-console.log('animate')
+ //Listen if the keydowns are being pressed and it gives the illusion that the player is moving.
+//  if()
+// console.log('animate')
 }
 
 animate()
@@ -58,20 +95,52 @@ window.addEventListener('keydown', (e) =>{
    
     switch (e.key){
         case 'w':
-            console.log('presend w key')
+            keys.w.pressed = true
+            // console.log('presend w key')
             break
 
             case 'a':
-                console.log('presend a key')
+                keys.a.pressed = true
+                // console.log('presend a key')
                 break
 
                 case 's':
-                    console.log('presend s key')
+                    keys.s.pressed = true
+                    // console.log('presend s key')
                     break
 
                     case 'd':
-                        console.log('presend d key')
+                        keys.d.pressed = true
+                        // console.log('presend d key')
                         break
+                    
+    }
+    console.log(keys)
+})
+
+window.addEventListener('keyup', (e) =>{
+   
+    switch (e.key){
+        case 'w':
+            keys.w.pressed = false
+            // console.log('presend w key')
+            break
+
+            case 'a':
+                keys.a.pressed = false
+                // console.log('presend a key')
+                break
+
+                case 's':
+                    keys.s.pressed = false
+                    // console.log('presend s key')
+                    break
+
+                    case 'd':
+                        keys.d.pressed = false
+                        // console.log('presend d key')
+                        break
+                    
     }
 })
  
