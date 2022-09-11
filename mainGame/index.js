@@ -157,14 +157,14 @@ function animate(){
     boundaries.forEach(boundary =>{
       boundary.draw() 
       
-      if(
-        rectangularCollision({
-            rectangle1: player,
-            rectangle2: boundary
-        })
-    ){
-        console.log('colliding')
-    }
+    //   if(
+    //     rectangularCollision({
+    //         rectangle1: player,
+    //         rectangle2: boundary
+    //     })
+    // ){
+    //     console.log('colliding')
+    // }
     })
     // testBoundary.draw()
     player.draw()
@@ -175,17 +175,36 @@ function animate(){
 //  if (playerImageDown.position.x + player.width)
  //Listen if the keydowns are being pressed and it gives the illusion that the player is moving.Lastkey makes it so that the last button being pressed down is the one activated at once.
  if(keys.w.pressed && lastKey === 'w'){ 
-    movables.forEach(movable => {movable.position.y += 3})  
+    for(let i = 0; i < boundaries.length; i++){
+    const boundary = boundaries[i]
+    if(
+        rectangularCollision({
+            rectangle1: player,
+            rectangle2: {...boundary, position: {
+                x: boundary.position.x,
+                y: boundary.position.y + 3
+            }}
+        })
+    ){
+        console.log('collision')
+    }
  }
- else if(keys.a.pressed && lastKey === 'a'){ 
-    movables.forEach(movable =>  {movable.position.x += 3}) 
- }
- else if(keys.s.pressed && lastKey === 's'){
-    movables.forEach(movable =>  {movable.position.y -= 3})
+ movables.forEach((movable) => {
+    movable.position.y += 3
+ })
+}else if(keys.a.pressed && lastKey === 'a'){ 
+    movables.forEach((movable) => {
+        movable.position.x += 3
+    }) 
+ } else if(keys.s.pressed && lastKey === 's'){
+    movables.forEach((movable) => {
+        movable.position.y -= 3
+    })
    
- }
- else if(keys.d.pressed && lastKey === 'd') { 
-    movables.forEach(movable =>  {movable.position.x -= 3})
+ }else if(keys.d.pressed && lastKey === 'd') { 
+    movables.forEach((movable) =>  {
+        movable.position.x -= 3
+    })
    
  }
 // console.log('animate')
