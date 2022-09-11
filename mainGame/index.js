@@ -74,21 +74,47 @@ c.drawImage(image, -785, -650);
 
 //everytime i make a different reference to sprite, it will be different thats why this Class is here.
 class Sprite {
-    constructor( {position,velocity, image}){
+    constructor( {position, velocity, image, frames = {max: 1}}){
         this.position = position
         this.image = image
+        this.frames = frames
+        this.image.onload = () =>{
+        this.width = this.image.width / this.frames.max
+        this.height = this.image.height
+            console.log(this.width)
+            console.log(this.height)
+        }
     }
     //what code do i need to use to draw something in the canvas.
     draw(){
-        c.drawImage(this.image, this.position.x, this.position.y);
+        // c.drawImage(this.image, this.position.x, this.position.y);
+        c.drawImage
+(this.image,
+    0,
+    0,
+    this.image.width / this.frames.max,
+this.image.height,
+this.position.x,
+this.position.y,
+this.image.width / this.frames.max,
+ this.image.height
+ )
     }
 }
-const testBoundary = new Boundary({
-    position: {
-        x: 400,
-        y: 400
+
+const player = new Sprite ({
+    position:{
+        x: canvas.width / 2 - 192 / 4 / 2,
+        y: canvas.height / 2 - 68 / 2
+    },
+    image: playerImageDown,
+    frames: {
+        max: 4
     }
 })
+
+//  canvas.height / 2 - this.height / 2,
+
 const background = new Sprite({
     position: {
         x: offset.x,
@@ -112,34 +138,55 @@ const keys = {
     }
 }
 
+const movables = [background, ...boundaries]
+
+function rectangularCollision({rectangle1, rectangle2}){
+    return( 
+        rectangle1.position.x + rectangle1.width >= rectangle2.position.x && 
+        rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
+        rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
+        rectangle1.position.y + rectangle1.height >= rectangle2.position.y
+         
+     )
+
+}
 
 function animate(){
     window.requestAnimationFrame(animate)
     background.draw()
-    // boundaries.forEach(boundary =>{
-    //   boundary.draw()  
-    // })
-    testBoundary.draw()
+    boundaries.forEach(boundary =>{
+      boundary.draw() 
+      
+      if(
+        rectangularCollision({
+            rectangle1: player,
+            rectangle2: boundary
+        })
+    ){
+        console.log('colliding')
+    }
+    })
+    // testBoundary.draw()
+    player.draw()
+    
+   
+   
 //Player down and canvas width divided by x coordinate 2 and y coordinate 0.
-c.drawImage
-(playerImageDown,
-    0,
-    0,
-    playerImageDown.width / 4,
-    playerImageDown.height,
- canvas.width / 2 - playerImageDown.width / 4 / 2,
- canvas.height / 2 - playerImageDown.height / 2,
- playerImageDown.width/ 4,
- playerImageDown.height
- )
+//  if (playerImageDown.position.x + player.width)
  //Listen if the keydowns are being pressed and it gives the illusion that the player is moving.Lastkey makes it so that the last button being pressed down is the one activated at once.
- if(keys.w.pressed && lastKey === 'w'){ background.position.y += 3
+ if(keys.w.pressed && lastKey === 'w'){ 
+    movables.forEach(movable => {movable.position.y += 3})  
  }
- else if(keys.a.pressed && lastKey === 'a'){ background.position.x += 3
+ else if(keys.a.pressed && lastKey === 'a'){ 
+    movables.forEach(movable =>  {movable.position.x += 3}) 
  }
- else if(keys.s.pressed && lastKey === 's'){ background.position.y -= 3
+ else if(keys.s.pressed && lastKey === 's'){
+    movables.forEach(movable =>  {movable.position.y -= 3})
+   
  }
- else if(keys.d.pressed && lastKey === 'd') { background.position.x -= 3
+ else if(keys.d.pressed && lastKey === 'd') { 
+    movables.forEach(movable =>  {movable.position.x -= 3})
+   
  }
 // console.log('animate')
 }
