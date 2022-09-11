@@ -3,11 +3,49 @@ const c = canvas.getContext('2d')
 const bodyBlack = document.querySelector('body')
 bodyBlack.style.background = 'black';
 
+// console.log(collisions)
 canvas.width = 1024
 canvas.height = 576
 
-c.fillStyle = 'white'
-c.fillRect(0,0, canvas.width, canvas.height);
+const collisionsMap = []
+for(let i = 0; i < collisions.length; i += 70){
+    collisionsMap.push( collisions.slice(i, 70 + i))
+ }
+// console.log(collisionsMap)
+
+class Boundary {
+    static width = 48
+    static height = 48
+    constructor({position}){
+        this.position = position
+        this.width = 48
+        this.height = 48
+    }
+    draw(){
+        c.fillStyle ='red'
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+const boundaries = []
+
+const offset = {
+    x: -210,
+    y: -400
+}
+
+collisionsMap.forEach((row, i) => {
+    row.forEach((symbol, j) => {
+        if (symbol === 1025 )
+        boundaries.push(new Boundary({position: {
+            x: j * Boundary.width + offset.x,
+            y: i * Boundary.height + offset.y
+        }
+    })
+        )
+    })
+})
+console.log(boundaries)
 
 const image = new Image()
 image.src = "../img/PokeMap.png"
@@ -18,19 +56,19 @@ playerImageDown.src = "../img/playerDown.png"
 //I want the player image to load here
 image.onload = () => {
     //x coordinate and Y coordinates
-c.drawImage(image, -215, -400);
+c.drawImage(image, -785, -650);
 //Player down and canvas width divided by x coordinate 2 and y coordinate 0.
-c.drawImage
-(playerImageDown,
-    0,
-    0,
-    playerImageDown.width / 4,
-    playerImageDown.height,
- canvas.width / 2 - playerImageDown.width / 4 / 2,
- canvas.height / 2 - playerImageDown.height / 2,
- playerImageDown.width/ 4,
- playerImageDown.height
- )
+// c.drawImage
+// (playerImageDown,
+//     0,
+//     0,
+//     playerImageDown.width / 4,
+//     playerImageDown.height,
+//  canvas.width / 2 - playerImageDown.width / 4 / 2,
+//  canvas.height / 2 - playerImageDown.height / 2,
+//  playerImageDown.width/ 4,
+//  playerImageDown.height
+//  )
  //the equation above cuts the sprite sheet into one animation and it centers the character on the center coordinate?
 }
 
@@ -42,14 +80,19 @@ class Sprite {
     }
     //what code do i need to use to draw something in the canvas.
     draw(){
-        c.drawImage(this.image, -785, -650);
+        c.drawImage(this.image, this.position.x, this.position.y);
     }
 }
-
+const testBoundary = new Boundary({
+    position: {
+        x: 400,
+        y: 400
+    }
+})
 const background = new Sprite({
     position: {
-        x: -785,
-        y: -650
+        x: offset.x,
+        y: offset.y
     },
     image: image
 })
@@ -69,9 +112,14 @@ const keys = {
     }
 }
 
+
 function animate(){
     window.requestAnimationFrame(animate)
-    background.draw
+    background.draw()
+    // boundaries.forEach(boundary =>{
+    //   boundary.draw()  
+    // })
+    testBoundary.draw()
 //Player down and canvas width divided by x coordinate 2 and y coordinate 0.
 c.drawImage
 (playerImageDown,
@@ -84,33 +132,45 @@ c.drawImage
  playerImageDown.width/ 4,
  playerImageDown.height
  )
- //Listen if the keydowns are being pressed and it gives the illusion that the player is moving.
-//  if()
+ //Listen if the keydowns are being pressed and it gives the illusion that the player is moving.Lastkey makes it so that the last button being pressed down is the one activated at once.
+ if(keys.w.pressed && lastKey === 'w'){ background.position.y += 3
+ }
+ else if(keys.a.pressed && lastKey === 'a'){ background.position.x += 3
+ }
+ else if(keys.s.pressed && lastKey === 's'){ background.position.y -= 3
+ }
+ else if(keys.d.pressed && lastKey === 'd') { background.position.x -= 3
+ }
 // console.log('animate')
 }
 
 animate()
+let lastKey = ''
 
 window.addEventListener('keydown', (e) =>{
    
     switch (e.key){
         case 'w':
             keys.w.pressed = true
+            lastKey = 'w'
             // console.log('presend w key')
             break
 
             case 'a':
                 keys.a.pressed = true
+                lastKey = 'a'
                 // console.log('presend a key')
                 break
 
                 case 's':
                     keys.s.pressed = true
+                    lastKey = 's'
                     // console.log('presend s key')
                     break
 
                     case 'd':
                         keys.d.pressed = true
+                        lastKey = 'd'
                         // console.log('presend d key')
                         break
                     
