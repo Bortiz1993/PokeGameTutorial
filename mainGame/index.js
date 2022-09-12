@@ -109,7 +109,7 @@ class Sprite {
     );
   }
 }
-
+//this might be the sprite mesurements, maybe i can make the sprite smaller instead?
 const player = new Sprite({
   position: {
     x: canvas.width / 2 - 192 / 4 / 2,
