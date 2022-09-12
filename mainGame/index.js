@@ -9,6 +9,7 @@ canvas.height = 576;
 
 const collisionsMap = [];
 for (let i = 0; i < collisions.length; i += 70) {
+  console.log(collisions)
   collisionsMap.push(collisions.slice(i, 70 + i));
 }
 // console.log(collisions)
@@ -20,9 +21,9 @@ class Boundary {
   static height = 48;
   constructor({ position }) {
     this.position = position;
-    //size of the square boundary
-    this.width = 48;
-    this.height = 48;
+    //size of the square boundary //this might be the source of the problem? its either the size of the collision block or the size of my sprite
+    this.width = 32;
+    this.height = 32;
   }
   //renders the red boundary squares
   draw() {
@@ -89,6 +90,7 @@ class Sprite {
       this.height = this.image.height;
       console.log(this.width);
       console.log(this.height);
+      // console.log(this.image.width)
     };
   }
   //what code do i need to use to draw something in the canvas.
@@ -246,7 +248,7 @@ let moving = true;
 
   }//player goes right, left boundary 
   else if (keys.d.pressed && lastKey === "d") {
-    let moving = true;
+    // let moving = true;
     for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         console.log(boundary)
@@ -302,10 +304,10 @@ window.addEventListener("keydown", (e) => {
     case "d":
       keys.d.pressed = true;
       lastKey = "d";
-      console.log('presend d key', keys.d.pressed)
+      // console.log('presend d key', keys.d.pressed)
       break;
   }
-  console.log(keys);
+  // console.log(keys);
 });
 
 window.addEventListener("keyup", (e) => {
