@@ -1,3 +1,5 @@
+
+
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const bodyBlack = document.querySelector("body");
@@ -15,22 +17,7 @@ for (let i = 0; i < collisions.length; i += 70) {
 // console.log(collisions)
 
 //boundary coordinates and measurements
-class Boundary {
-    ///how many boundaries show up
-  static width = 48;
-  static height = 48;
-  constructor({ position }) {
-    this.position = position;
-    //size of the square boundary //this might be the source of the problem? its either the size of the collision block or the size of my sprite
-    this.width = 45;
-    this.height = 32;
-  }
-  //renders the red boundary squares
-  draw() {
-    c.fillStyle = "red";
-    c.fillRect(this.position.x, this.position.y, this.width, this.height);
-  }
-}
+
 
 const boundaries = [];
 
@@ -57,6 +44,11 @@ console.log(boundaries);
 
 const image = new Image();
 image.src = "../img/PokeMap.png";
+
+const foregroundImage = new Image()
+foregroundImage.src = "../img/foregroundObjects.png"
+console.log(foregroundImage.src)
+
 const playerImageDown = new Image();
 playerImageDown.src = "../img/playerDown.png";
 
@@ -80,35 +72,7 @@ image.onload = () => {
 };
 
 //everytime i make a different reference to sprite, it will be different thats why this Class is here.
-class Sprite {
-  constructor({ position, velocity, image, frames = { max: 1 } }) {
-    this.position = position;
-    this.image = image;
-    this.frames = frames;
-    this.image.onload = () => {
-      this.width = this.image.width / this.frames.max;
-      this.height = this.image.height;
-      console.log(this.width);
-      console.log(this.height);
-      // console.log(this.image.width)
-    };
-  }
-  //what code do i need to use to draw something in the canvas.
-  draw() {
-    // c.drawImage(this.image, this.position.x, this.position.y);
-    c.drawImage(
-      this.image,
-      0,
-      0,
-      this.image.width / this.frames.max,
-      this.image.height,
-      this.position.x,
-      this.position.y,
-      this.image.width / this.frames.max,
-      this.image.height
-    );
-  }
-}
+
 //this might be the sprite mesurements, maybe i can make the sprite smaller instead?
 const player = new Sprite({
   position: {
@@ -131,6 +95,14 @@ const background = new Sprite({
   image: image,
 });
 
+const foreground = new Sprite({
+  position: {
+    x: offset.x,
+    y: offset.y,
+  },
+  image: foregroundImage
+});
+
 const keys = {
   w: {
     pressed: false,
@@ -146,25 +118,33 @@ const keys = {
   },
 };
 
-const movables = [background, ...boundaries];
+const movables = [background, ...boundaries, foreground];
 
 function rectangularCollision({ rectangle1, rectangle2 }) {
-    console.log(rectangle1, rectangle2)
+    console.log( rectangle2)
   return (
     rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
     rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
     rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
     rectangle1.position.y + rectangle1.height >= rectangle2.position.y
+    
   );
+  
 }
+// console.log(rectangle1.x)
+// console.log(rectangle2,x)
 
 function animate() {
   window.requestAnimationFrame(animate);
   background.draw();
   boundaries.forEach((boundary) => {
     boundary.draw();
+   
   });
+  
   player.draw();
+  foreground.draw();
+
 
 let moving = true;
 //Player goes up, down boundary
