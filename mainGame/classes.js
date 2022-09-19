@@ -1,22 +1,21 @@
 class Sprite {
-    constructor({ position, velocity, image, frames = { max: 1 } }) {
+    constructor({ position, velocity, image, frames = { max: 1 }, sprites  }) {
       this.position = position;
       this.image = image;
-      this.frames = frames;
+      this.frames = {...frames, val: 0, elapsed: 0};
       this.image.onload = () => {
         this.width = this.image.width / this.frames.max;
         this.height = this.image.height;
-        console.log(this.width);
-        console.log(this.height);
-        // console.log(this.image.width)
-      };
+      }
+      this.moving = false
+      this.sprites = sprites
     }
     //what code do i need to use to draw something in the canvas.
     draw() {
       // c.drawImage(this.image, this.position.x, this.position.y);
       c.drawImage(
         this.image,
-        0,
+        this.frames.val * this.width,
         0,
         this.image.width / this.frames.max,
         this.image.height,
@@ -24,9 +23,19 @@ class Sprite {
         this.position.y,
         this.image.width / this.frames.max,
         this.image.height
-      );
+      )
+        if(!this.moving) return
+        if(this.frames.max > 1){
+            this.frames.elapsed++
+        }
+
+      if(this.frames.elapsed % 10 === 0){  
+      if(this.frames.val < this.frames.max - 1)this.frames.val++
+      else this.frames.val = 0
+      }
     }
   }
+
 
   class Boundary {
     ///how many boundaries show up

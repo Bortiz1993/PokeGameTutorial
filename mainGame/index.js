@@ -52,6 +52,18 @@ console.log(foregroundImage.src)
 const playerImageDown = new Image();
 playerImageDown.src = "../img/playerDown.png";
 
+
+const playerImageUp = new Image();
+playerImageUp.src = "../img/playerUp.png";
+
+
+const playerImageRight = new Image();
+playerImageRight.src = "../img/playerRight.png";
+
+
+const playerImageLeft = new Image();
+playerImageLeft.src = "../img/playerLeft.png";
+
 //This loads the map as soon as possible.
 image.onload = () => {
   //x coordinate and Y coordinates
@@ -83,6 +95,12 @@ const player = new Sprite({
   frames: {
     max: 4,
   },
+  sprites: {
+    up: playerImageUp,
+    left: playerImageLeft,
+    right: playerImageRight,
+    down: playerImageDown
+  } 
 });
 
 //  canvas.height / 2 - this.height / 2,
@@ -148,8 +166,11 @@ function animate() {
 
 let moving = true;
 //Player goes up, down boundary
+player.moving = false
   if (keys.w.pressed && lastKey === "w") {
-    console.log(boundaries)
+    player.moving = true
+    player.image = player.sprites.up
+    // console.log(boundaries)
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
       if (
@@ -176,6 +197,8 @@ let moving = true;
   } 
   //player goes to the left, right boundary 
   else if (keys.a.pressed && lastKey === "a") {
+    player.moving = true
+    player.image = player.sprites.left
     for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         if (
@@ -202,6 +225,8 @@ let moving = true;
 
   }//player goes down, top boundary 
   else if (keys.s.pressed && lastKey === "s") {
+    player.moving = true
+    player.image = player.sprites.down
     for (let i = 0; i < boundaries.length; i++) {
         const boundary = boundaries[i];
         if (
@@ -228,9 +253,10 @@ let moving = true;
 
   }//player goes right, left boundary 
   else if (keys.d.pressed && lastKey === "d") {
-    // let moving = true;
+    player.moving = true
+    player.image = player.sprites.right
     for (let i = 0; i < boundaries.length; i++) {
-        const boundary = boundaries[i];
+      const boundary = boundaries[i];
         console.log(boundary)
         if (
           rectangularCollision({
