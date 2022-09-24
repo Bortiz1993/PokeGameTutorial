@@ -49,7 +49,7 @@ class Sprite {
   }
   //renders the red boundary squares
   draw() {
-    c.fillStyle = "red";
+    c.fillStyle = "rgba(0, 0, 0, 0.5)";
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 }
