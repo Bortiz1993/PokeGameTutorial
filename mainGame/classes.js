@@ -44,8 +44,8 @@ class Sprite {
   constructor({ position }) {
     this.position = position;
     //size of the square boundary //this might be the source of the problem? its either the size of the collision block or the size of my sprite
-    this.width = 45;
-    this.height = 32;
+    this.width = 35;
+    this.height = 35;
   }
   //renders the red boundary squares
   draw() {

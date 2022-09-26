@@ -2,7 +2,6 @@ const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const bodyBlack = document.querySelector("body");
 bodyBlack.style.background = "black";
-// console.log(battleZones)
 
 // Canvas Dimensions
 canvas.width = 1024;
@@ -103,11 +102,12 @@ image.onload = () => {
 
 //everytime i make a different reference to sprite, it will be different thats why this Class is here.
 
-//this might be the sprite mesurements, maybe i can make the sprite smaller instead?
+//this might be the sprite measurements, maybe i can make the sprite smaller instead?
 const player = new Sprite({
   position: {
     x: canvas.width / 2 - 192 / 4 / 2,
-    y: canvas.height / 2 - 68 / 2,
+    y: canvas.height / 2 - 37 / 2,
+    ///this height might be the reason why the character cannot move and it affects the battle patch activation?
   },
   image: playerImageDown,
   frames: {
@@ -168,6 +168,9 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
 }
 // console.log(rectangle1.x)
 // console.log(rectangle2,x)
+const battle = {
+  initiated: false
+}
 
 function animate() {
   window.requestAnimationFrame(animate);
@@ -184,6 +187,10 @@ function animate() {
   foreground.draw();
 
   //this if statement makes sure we are touching the tiles from all directions.
+  //This basically activates the battle.
+ 
+  
+  if(battle.initiated) return
 
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
@@ -193,27 +200,27 @@ function animate() {
           player.position.x + player.width,
           battleZone.position.x + battleZone.width
            ) -
-          Math.max(player.position.x, battleZone.position.x)
-          ) *
-        (
-          Math.min(
+          Math.max(player.position.x, battleZone.position.x)) *
+        ( Math.min(
           player.position.y + player.height,
           battleZone.position.y + battleZone.height
         ) -
           Math.max(player.position.y, battleZone.position.y));
-      console.log(overlappingArea, "209");
-      console.log((player.width * player.height) / 2);
+      console.log(overlappingArea, "209 overlappingArea");
+      console.log( (battleZone.width * battleZone.height) / 2, "battlezone height and width")
+      console.log((player.width * player.height) / 2, "player height and width");
       if (
         rectangularCollision({
           rectangle1: player,
           rectangle2: battleZone,
           ///this might be causing problems?
-        }) &&
+        }) 
+        &&
         overlappingArea > (player.width * player.height) / 2 &&
-        Math.random() < 0.8
-      ) {
+        Math.random() < 0.01) {
         //ends the loop
-        console.log("battleZoneCollision");
+        console.log("activate battle!");
+        battle.initiated = true
         break;
       }
     }
