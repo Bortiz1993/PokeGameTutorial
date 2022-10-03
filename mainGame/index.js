@@ -1,7 +1,9 @@
+
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const bodyBlack = document.querySelector("body");
 bodyBlack.style.background = "black";
+
 
 // Canvas Dimensions
 canvas.width = 1024;
@@ -20,7 +22,6 @@ for (let i = 0; i < battleZonesData.length; i += 70) {
   console.log(battleZonesData);
   battleZonesMap.push(battleZonesData.slice(i, 70 + i));
 }
-// console.log(battleZonesMap )
 //boundary coordinates and measurements
 
 const boundaries = [];
@@ -39,7 +40,9 @@ collisionsMap.forEach((row, i) => {
           position: {
             x: j * Boundary.width + offset.x,
             y: i * Boundary.height + offset.y,
+            
           },
+          // battle: false
         })
       );
   });
@@ -56,7 +59,9 @@ battleZonesMap.forEach((row, i) => {
           position: {
             x: j * Boundary.width + offset.x,
             y: i * Boundary.height + offset.y,
+            
           },
+          // battle: true
         })
       );
   });
@@ -106,7 +111,9 @@ image.onload = () => {
 const player = new Sprite({
   position: {
     x: canvas.width / 2 - 192 / 4 / 2,
+    ///x position 1024 divided by 2 minus 192 divided by 4 divided by 2 = player.position.x = 40
     y: canvas.height / 2 - 37 / 2,
+    /// y position 576 divided by 2 minus 37 divided by 2 = player.position.y = 125.5
     ///this height might be the reason why the character cannot move and it affects the battle patch activation?
   },
   image: playerImageDown,
@@ -120,8 +127,6 @@ const player = new Sprite({
     down: playerImageDown,
   },
 });
-
-//  canvas.height / 2 - this.height / 2,
 
 const background = new Sprite({
   position: {
@@ -173,7 +178,8 @@ const battle = {
 }
 
 function animate() {
-  window.requestAnimationFrame(animate);
+ const animationId = window.requestAnimationFrame(animate);
+ console.log(animationId)
   background.draw();
   boundaries.forEach((boundary) => {
     boundary.draw();
@@ -189,26 +195,37 @@ function animate() {
   //this if statement makes sure we are touching the tiles from all directions.
   //This basically activates the battle.
  
-  
+  let moving = true;
+  player.moving = false;
   if(battle.initiated) return
 
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
+      // console.log(battleZone)
+      // if(battleZone.battle){
+        ///make hardcoded if statements for the battle being initiated.maybe put BigPatch in one variable and Small patch in another?
+
+      // console.log(battleZone.position.x, "BATTLE X", battleZone.position.y, "BATTLE Y")
+      // console.log(player.position.x, "playerPOSITION X", player.position.y, "playerPOSITION Y")
       const overlappingArea =
         (Math.min(
           player.position.x + player.width,
+        //   // 40 + 48 = 88
           battleZone.position.x + battleZone.width
+        //   //battleZone is random, usually around 800 + 48 = 848 minus?
            ) -
+        //     //40 and 800 times? 
           Math.max(player.position.x, battleZone.position.x)) *
         ( Math.min(
           player.position.y + player.height,
+        //   // 125.5 + 68
           battleZone.position.y + battleZone.height
+        //   //usually random around 400 + 48 minus?
+
         ) -
           Math.max(player.position.y, battleZone.position.y));
-      console.log(overlappingArea, "209 overlappingArea");
-      console.log( (battleZone.width * battleZone.height) / 2, "battlezone height and width")
-      console.log((player.width * player.height) / 2, "player height and width");
+              //125.5 and random around 400
       if (
         rectangularCollision({
           rectangle1: player,
@@ -216,17 +233,44 @@ function animate() {
           ///this might be causing problems?
         }) 
         &&
-        overlappingArea > (player.width * player.height) / 2 &&
+        overlappingArea > (player.width * player.height) / 2 &&                                     
         Math.random() < 0.01) {
         //ends the loop
         console.log("activate battle!");
+        // console.log(animationId)
+          //deactivate current animation loop
+          window.cancelAnimationFrame(animationId)
+          
         battle.initiated = true
+        gsap.to('#overlappingDIV',{
+          opacity:1,
+          repeat: 3,
+          yoyo: true,
+          duration: 0.4,
+          onComplete() {
+            gsap.to('#overlappingDIV',{
+              opacity: 1,
+              duration: 0.4,
+              onComplete(){
+                animateBattle()
+                  gsap.to('#overlappingDIV', {
+                    opacity:0,
+                    duration: 0.4
+            })
+              }
+            })
+            //activate a new animation loop
+            
+        
+          
+          }
+        })
         break;
       }
     }
   }
 
-  let moving = true;
+
   //Player goes up, down boundary
   player.moving = false;
   if (keys.w.pressed && lastKey === "w") {
@@ -344,8 +388,24 @@ function animate() {
 }
 
 animate();
-let lastKey = "";
 
+const battleBackgroundImage = new Image()
+battleBackgroundImage.src = "../img/battleBackground.png";
+const battleBackground = new Sprite ({
+  position: {
+    x: 0,
+    y: 0
+  },
+  image: battleBackgroundImage
+})
+function animateBattle(){
+  window.requestAnimationFrame(animateBattle)
+  battleBackground.draw()
+  console.log('animating battle')
+}
+
+
+let lastKey = "";
 window.addEventListener("keydown", (e) => {
   switch (e.key) {
     case "w":
