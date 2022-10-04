@@ -24,6 +24,7 @@ class Sprite {
         this.image.width / this.frames.max,
         this.image.height
       )
+      //all of this code below animates a sprite sheet.
         if(!this.moving) return
         if(this.frames.max > 1){
             this.frames.elapsed++

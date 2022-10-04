@@ -388,7 +388,7 @@ function animate() {
 }
 
 animate();
-
+//This code block creates a sprite and gives it the coordinates of where to start in the browser.
 const battleBackgroundImage = new Image()
 battleBackgroundImage.src = "../img/battleBackground.png";
 const battleBackground = new Sprite ({
@@ -398,9 +398,24 @@ const battleBackground = new Sprite ({
   },
   image: battleBackgroundImage
 })
+
+const draggleImage = new Image()
+draggleImage.src = "../img/draggleSprite.png";
+const draggle = new Sprite({
+  position: {
+    x: 800,
+    y: 100
+  },
+  image: draggleImage,
+  frames: {
+    max: 4
+  }
+})
+
 function animateBattle(){
   window.requestAnimationFrame(animateBattle)
   battleBackground.draw()
+  draggle.draw()
   console.log('animating battle')
 }
 
