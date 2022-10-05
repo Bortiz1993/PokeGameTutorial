@@ -119,6 +119,7 @@ const player = new Sprite({
   image: playerImageDown,
   frames: {
     max: 4,
+    hold: 10
   },
   sprites: {
     up: playerImageUp,
@@ -196,7 +197,7 @@ function animate() {
   //This basically activates the battle.
  
   let moving = true;
-  player.moving = false;
+  player.animate = false;
   if(battle.initiated) return
 
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
@@ -272,9 +273,9 @@ function animate() {
 
 
   //Player goes up, down boundary
-  player.moving = false;
+  player.animate = false;
   if (keys.w.pressed && lastKey === "w") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.up;
     // console.log(boundaries)
     for (let i = 0; i < boundaries.length; i++) {
@@ -304,7 +305,7 @@ function animate() {
   }
   //player goes to the left, right boundary
   else if (keys.a.pressed && lastKey === "a") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.left;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
@@ -331,7 +332,7 @@ function animate() {
       });
   } //player goes down, top boundary
   else if (keys.s.pressed && lastKey === "s") {
-    player.moving = true;
+    player.animate= true;
     player.image = player.sprites.down;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
@@ -358,7 +359,7 @@ function animate() {
       });
   } //player goes right, left boundary
   else if (keys.d.pressed && lastKey === "d") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.right;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
@@ -408,8 +409,10 @@ const draggle = new Sprite({
   },
   image: draggleImage,
   frames: {
-    max: 4
-  }
+    max: 4,
+    hold: 30
+  },
+  animate: true
 })
 
 function animateBattle(){
