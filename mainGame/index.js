@@ -1,9 +1,7 @@
-
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
 const bodyBlack = document.querySelector("body");
 bodyBlack.style.background = "black";
-
 
 // Canvas Dimensions
 canvas.width = 1024;
@@ -40,7 +38,6 @@ collisionsMap.forEach((row, i) => {
           position: {
             x: j * Boundary.width + offset.x,
             y: i * Boundary.height + offset.y,
-            
           },
           // battle: false
         })
@@ -59,7 +56,6 @@ battleZonesMap.forEach((row, i) => {
           position: {
             x: j * Boundary.width + offset.x,
             y: i * Boundary.height + offset.y,
-            
           },
           // battle: true
         })
@@ -119,7 +115,7 @@ const player = new Sprite({
   image: playerImageDown,
   frames: {
     max: 4,
-    hold: 10
+    hold: 10,
   },
   sprites: {
     up: playerImageUp,
@@ -175,12 +171,12 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
 // console.log(rectangle1.x)
 // console.log(rectangle2,x)
 const battle = {
-  initiated: false
-}
+  initiated: false,
+};
 
 function animate() {
- const animationId = window.requestAnimationFrame(animate);
- console.log(animationId)
+  const animationId = window.requestAnimationFrame(animate);
+  console.log(animationId);
   background.draw();
   boundaries.forEach((boundary) => {
     boundary.draw();
@@ -195,82 +191,77 @@ function animate() {
 
   //this if statement makes sure we are touching the tiles from all directions.
   //This basically activates the battle.
- 
+
   let moving = true;
   player.animate = false;
-  if(battle.initiated) return
+  if (battle.initiated) return;
 
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
       // console.log(battleZone)
       // if(battleZone.battle){
-        ///make hardcoded if statements for the battle being initiated.maybe put BigPatch in one variable and Small patch in another?
+      ///make hardcoded if statements for the battle being initiated.maybe put BigPatch in one variable and Small patch in another?
 
       // console.log(battleZone.position.x, "BATTLE X", battleZone.position.y, "BATTLE Y")
       // console.log(player.position.x, "playerPOSITION X", player.position.y, "playerPOSITION Y")
       const overlappingArea =
         (Math.min(
           player.position.x + player.width,
-        //   // 40 + 48 = 88
+          //   // 40 + 48 = 88
           battleZone.position.x + battleZone.width
-        //   //battleZone is random, usually around 800 + 48 = 848 minus?
-           ) -
-        //     //40 and 800 times? 
+          //   //battleZone is random, usually around 800 + 48 = 848 minus?
+        ) -
+          //     //40 and 800 times?
           Math.max(player.position.x, battleZone.position.x)) *
-        ( Math.min(
+        (Math.min(
           player.position.y + player.height,
-        //   // 125.5 + 68
+          //   // 125.5 + 68
           battleZone.position.y + battleZone.height
-        //   //usually random around 400 + 48 minus?
-
+          //   //usually random around 400 + 48 minus?
         ) -
           Math.max(player.position.y, battleZone.position.y));
-              //125.5 and random around 400
+      //125.5 and random around 400
       if (
         rectangularCollision({
           rectangle1: player,
           rectangle2: battleZone,
           ///this might be causing problems?
-        }) 
-        &&
-        overlappingArea > (player.width * player.height) / 2 &&                                     
-        Math.random() < 0.01) {
+        }) &&
+        overlappingArea > (player.width * player.height) / 2 &&
+        Math.random() < 0.01
+      ) {
         //ends the loop
         console.log("activate battle!");
         // console.log(animationId)
-          //deactivate current animation loop
-          window.cancelAnimationFrame(animationId)
-          
-        battle.initiated = true
-        gsap.to('#overlappingDIV',{
-          opacity:1,
+        //deactivate current animation loop
+        window.cancelAnimationFrame(animationId);
+
+        battle.initiated = true;
+        gsap.to("#overlappingDIV", {
+          opacity: 1,
           repeat: 3,
           yoyo: true,
           duration: 0.4,
           onComplete() {
-            gsap.to('#overlappingDIV',{
+            gsap.to("#overlappingDIV", {
               opacity: 1,
               duration: 0.4,
-              onComplete(){
-                animateBattle()
-                  gsap.to('#overlappingDIV', {
-                    opacity:0,
-                    duration: 0.4
-            })
-              }
-            })
+              onComplete() {
+                animateBattle();
+                gsap.to("#overlappingDIV", {
+                  opacity: 0,
+                  duration: 0.4,
+                });
+              },
+            });
             //activate a new animation loop
-            
-        
-          
-          }
-        })
+          },
+        });
         break;
       }
     }
   }
-
 
   //Player goes up, down boundary
   player.animate = false;
@@ -332,7 +323,7 @@ function animate() {
       });
   } //player goes down, top boundary
   else if (keys.s.pressed && lastKey === "s") {
-    player.animate= true;
+    player.animate = true;
     player.image = player.sprites.down;
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
@@ -390,55 +381,53 @@ function animate() {
 
 animate();
 //This code block creates a sprite and gives it the coordinates of where to start in the browser.
-const battleBackgroundImage = new Image()
+const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "../img/battleBackground.png";
-const battleBackground = new Sprite ({
+const battleBackground = new Sprite({
   position: {
     x: 0,
-    y: 0
+    y: 0,
   },
-  image: battleBackgroundImage
-})
+  image: battleBackgroundImage,
+});
 
-const draggleImage = new Image()
+const draggleImage = new Image();
 draggleImage.src = "../img/draggleSprite.png";
 const draggle = new Sprite({
   position: {
     x: 800,
-    y: 100
+    y: 100,
   },
   image: draggleImage,
   frames: {
     max: 4,
-    hold: 30
+    hold: 30,
   },
-  animate: true
-})
+  animate: true,
+});
 
-const embyImage = new Image()
+const embyImage = new Image();
 embyImage.src = "../img/embySprite.png";
 const emby = new Sprite({
   position: {
     x: 280,
-    y: 325
+    y: 325,
   },
   image: embyImage,
   frames: {
     max: 4,
-    hold: 30
+    hold: 30,
   },
-  animate: true
-})
+  animate: true,
+});
 
-
-function animateBattle(){
-  window.requestAnimationFrame(animateBattle)
-  battleBackground.draw()
-  draggle.draw()
-  emby.draw()
-  console.log('animating battle')
+function animateBattle() {
+  window.requestAnimationFrame(animateBattle);
+  battleBackground.draw();
+  draggle.draw();
+  emby.draw();
+  console.log("animating battle");
 }
-
 
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
