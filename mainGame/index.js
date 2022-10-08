@@ -13,8 +13,7 @@ for (let i = 0; i < collisions.length; i += 70) {
   collisionsMap.push(collisions.slice(i, 70 + i));
 }
 
-///.length; i += 70 is the actual length of the game map.It dosent like this for loop
-// var BattleZones
+///.length; i += 70 is the actual length of the game map.It dosent like this for loop?
 const battleZonesMap = [];
 for (let i = 0; i < battleZonesData.length; i += 70) {
   console.log(battleZonesData);
@@ -168,8 +167,6 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
     rectangle1.position.y + rectangle1.height >= rectangle2.position.y
   );
 }
-// console.log(rectangle1.x)
-// console.log(rectangle2,x)
 const battle = {
   initiated: false,
 };
@@ -191,7 +188,6 @@ function animate() {
 
   //this if statement makes sure we are touching the tiles from all directions.
   //This basically activates the battle.
-
   let moving = true;
   player.animate = false;
   if (battle.initiated) return;
@@ -379,7 +375,6 @@ function animate() {
   }
 }
 
-animate();
 //This code block creates a sprite and gives it the coordinates of where to start in the browser.
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "../img/battleBackground.png";
@@ -428,6 +423,23 @@ function animateBattle() {
   emby.draw();
   console.log("animating battle");
 }
+
+// animate();
+animateBattle();
+
+//button and attack action functionality. Grabs all buttons, place objects inside of this button.
+document.querySelectorAll('button').forEach((button) => {
+  button.addEventListener('click', () => {
+    emby.attack({attack:{
+      name: 'Tackle',
+      damage: 10,
+      type: 'Normal'
+    },
+    recipient: draggle
+  })
+  })
+})
+
 
 let lastKey = "";
 window.addEventListener("keydown", (e) => {
