@@ -428,16 +428,14 @@ function animateBattle() {
 // animate();
 animateBattle();
 
-//button and attack action functionality. Grabs all buttons, place objects inside of this button.
+//button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
 document.querySelectorAll('button').forEach((button) => {
-  button.addEventListener('click', () => {
-    emby.attack({attack:{
-      name: 'Tackle',
-      damage: 10,
-      type: 'Normal'
-    },
-    recipient: draggle
-  })
+  button.addEventListener('click', (e) => {
+    console.log(attacks[e.currentTarget.innerHTML])
+  //   emby.attack({
+  //   attack: ,
+  //   recipient: draggle
+  // })
   })
 })
 
