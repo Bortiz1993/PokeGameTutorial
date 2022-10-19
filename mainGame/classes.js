@@ -41,52 +41,68 @@ class Sprite {
       }
     }
     attack({attack, recipient}){
-      const tl = gsap.timeline()
-      //this depletes the health every time.
-      this.health -= attack.damage
-
-      let movementDistance = 20
-      if(this.isEnemy) movementDistance = -20
-
-      let healthBar = '#draggleHealthBar'
-      if(this.isEnemy) healthBar = '#playerHealthBar'
-
-      tl.to(this.position,{
-        x: this.position.x - movementDistance
-      })
-      .to(this.position, {
-        x: this.position.x + movementDistance * 2,
-        duration: 0.1,
-        onComplete: () => {
-        
-          // this is what happens when enemy gets hit.
-          gsap.to(healthBar, {
-            width: this.health - attack.damage + '%'
+      switch (attack.name){
+        case 'Fireball':
+          const fireballImage = new Image()
+          fireballImage.src = '../image/fireball.png'
+          const fireball = new Sprite({
+            position: {
+              x: this.position.x,
+              y: this.position.y
+            },
+            image: fireballImage
           })
-          gsap.to(recipient.position, {
-            x: recipient.position.x + 10,
-            yoyo: true,
-            repeat: 5,
-            duration: 0.08
+        break
+        case 'Tackle':
+          const tl = gsap.timeline()
+          //this depletes the health every time.
+          this.health -= attack.damage
+    
+          let movementDistance = 20
+          if(this.isEnemy) movementDistance = -20
+    
+          let healthBar = '#draggleHealthBar'
+          if(this.isEnemy) healthBar = '#playerHealthBar'
+    
+          tl.to(this.position,{
+            x: this.position.x - movementDistance
           })
-          gsap.to(recipient, {
-           
-            opacity:0,
-            repeat: 5,
-            yoyo: true,
-            duration: 0.08,
+          .to(this.position, {
+            x: this.position.x + movementDistance * 2,
+            duration: 0.1,
             onComplete: () => {
-              console.log('done?')
+            
+              // this is what happens when enemy gets hit.
+              gsap.to(healthBar, {
+                width: this.health - attack.damage + '%'
+              })
+              gsap.to(recipient.position, {
+                x: recipient.position.x + 10,
+                yoyo: true,
+                repeat: 5,
+                duration: 0.08
+              })
+              gsap.to(recipient, {
+               
+                opacity:0,
+                repeat: 5,
+                yoyo: true,
+                duration: 0.08,
+                onComplete: () => {
+                  console.log('done?')
+                }
+              })
+                // console.log('done')
             }
           })
-            // console.log('done')
+          // TODO all of this code is associated with the Tackle functionality video stamp: 5:37
+          .to(this.position, {
+            x: this.position.x
+          })
         }
-      })
-      // console.log('done')
-      .to(this.position, {
-        x: this.position.x
-      })
-    }
+        
+      }
+
   }
 
 

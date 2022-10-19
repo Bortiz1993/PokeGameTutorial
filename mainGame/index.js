@@ -417,6 +417,7 @@ const emby = new Sprite({
   animate: true,
 });
 
+const renderedSprites = []
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
@@ -431,11 +432,11 @@ animateBattle();
 //button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
 document.querySelectorAll('button').forEach((button) => {
   button.addEventListener('click', (e) => {
-    console.log(attacks[e.currentTarget.innerHTML])
-  //   emby.attack({
-  //   attack: ,
-  //   recipient: draggle
-  // })
+    const selectedAttack = attacks[e.currentTarget.innerHtml]
+    emby.attack({
+    attack: selectedAttack ,
+    recipient: draggle
+  })
   })
 })
 
