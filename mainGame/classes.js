@@ -40,19 +40,21 @@ class Sprite {
       else this.frames.val = 0
       }
     }
-    attack({attack, recipient}){
+    attack({attack, recipient, renderedSprites}){
       switch (attack.name){
         case 'Fireball':
           const fireballImage = new Image()
-          fireballImage.src = '../image/fireball.png'
-          const fireball = new Sprite({
+          fireballImage.src = '../img/fireball.png'
+          const fireball = new Sprite ({
             position: {
               x: this.position.x,
               y: this.position.y
             },
             image: fireballImage
           })
-        break
+          renderedSprites.push(fireball)
+          break
+
         case 'Tackle':
           const tl = gsap.timeline()
           //this depletes the health every time.
@@ -71,7 +73,6 @@ class Sprite {
             x: this.position.x + movementDistance * 2,
             duration: 0.1,
             onComplete: () => {
-            
               // this is what happens when enemy gets hit.
               gsap.to(healthBar, {
                 width: this.health - attack.damage + '%'
@@ -95,16 +96,13 @@ class Sprite {
                 // console.log('done')
             }
           })
-          // TODO all of this code is associated with the Tackle functionality video stamp: 5:37
           .to(this.position, {
             x: this.position.x
           })
-        }
-        
+        break;
       }
-
-  }
-
+      }
+       }
 
   class Boundary {
     ///how many boundaries show up

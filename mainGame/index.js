@@ -423,7 +423,11 @@ function animateBattle() {
   battleBackground.draw();
   draggle.draw();
   emby.draw();
-  console.log("animating battle");
+
+  renderedSprites.forEach((sprite) => {
+    sprite.draw()
+  })
+  // console.log("animating battle");
 }
 
 // animate();
@@ -432,10 +436,13 @@ animateBattle();
 //button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
 document.querySelectorAll('button').forEach((button) => {
   button.addEventListener('click', (e) => {
-    const selectedAttack = attacks[e.currentTarget.innerHtml]
+    // console.log(e.currentTarget.innerHTML)
+
+    const selectedAttack = attacks[e.currentTarget.innerHTML]
     emby.attack({
-    attack: selectedAttack ,
-    recipient: draggle
+    attack: selectedAttack,
+    recipient: draggle,
+    renderedSprites
   })
   })
 })
