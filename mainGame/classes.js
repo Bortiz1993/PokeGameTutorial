@@ -12,10 +12,12 @@ class Sprite {
       this.opacity = 1
       this.health = 100
       this.isEnemy = isEnemy
+      this.rotation = rotation
     }
     //what code do i need to use to draw something in the canvas.
     draw() {
       c.save()
+      c.translate(this.position.x, this.position.y, 0)
       c.globalAlpha = this.opacity
       c.drawImage(
         this.image,
@@ -41,6 +43,12 @@ class Sprite {
       }
     }
     attack({attack, recipient, renderedSprites}){
+      //placing the code in line 44-48 makes it globally avaliable inside here:
+      let healthBar = '#draggleHealthBar'
+      if(this.isEnemy) healthBar = '#playerHealthBar'
+
+      this.health -= attack.damage
+
       switch (attack.name){
         case 'Fireball':
           const fireballImage = new Image()
@@ -50,21 +58,47 @@ class Sprite {
               x: this.position.x,
               y: this.position.y
             },
-            image: fireballImage
+            image: fireballImage,
+            frames: {
+              max: 4,
+              hold: 10
+
+            },
+            animate: true
           })
-          renderedSprites.push(fireball)
+         
+          renderedSprites.splice(1,0, fireball)
+
+          gsap.to(fireball.position,{
+            x: recipient.position.x,
+            y: recipient.position.y,
+            onComplete: () => {
+              gsap.to(healthBar, {
+                width: this.health - attack.damage + '%'
+              })
+              gsap.to(recipient.position, {
+                x: recipient.position.x + 10,
+                yoyo: true,
+                repeat: 5,
+                duration: 0.08
+              })
+              gsap.to(recipient, {
+               
+                opacity:0,
+                repeat: 5,
+                yoyo: true,
+                duration: 0.08
+              })
+              renderedSprites.splice(1, 1)
+            }
+          })
           break
 
         case 'Tackle':
           const tl = gsap.timeline()
           //this depletes the health every time.
-          this.health -= attack.damage
-    
           let movementDistance = 20
           if(this.isEnemy) movementDistance = -20
-    
-          let healthBar = '#draggleHealthBar'
-          if(this.isEnemy) healthBar = '#playerHealthBar'
     
           tl.to(this.position,{
             x: this.position.x - movementDistance
