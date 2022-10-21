@@ -8,5 +8,11 @@ const attacks = {
         name: 'Fireball',
         damage: 20,
         type: 'Fire'
+    },
+
+    Iceshot:{
+        name: 'Iceshot',
+        damage: 24,
+        type: 'Ice'
     }
 }

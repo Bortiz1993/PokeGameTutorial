@@ -9,40 +9,19 @@ const battleBackground = new Sprite({
   image: battleBackgroundImage,
 });
 
-const draggleImage = new Image();
-draggleImage.src = "../img/draggleSprite.png";
-const draggle = new Sprite({
-  position: {
-    x: 800,
-    y: 100,
-  },
-  image: draggleImage,
-  frames: {
-    max: 4,
-    hold: 30,
-  },
-  animate: true,
-  isEnemy: true,
-  name: 'Draggle'
-});
 
-const embyImage = new Image();
-embyImage.src = "../img/embySprite.png";
-const emby = new Sprite({
-  position: {
-    x: 280,
-    y: 325,
-  },
-  image: embyImage,
-  frames: {
-    max: 4,
-    hold: 30,
-  },
-  animate: true,
-  name: 'Emby'
-});
-
+const draggle = new Monsters(monsters.Draggle);
+const emby = new Monsters(monsters.Emby);
+console.log(emby)
+console.log(draggle)
 const renderedSprites = [draggle, emby]
+
+emby.attacks.forEach((attack) =>{
+    const button = document.createElement('button')
+    button.innerHTML = attack.name
+    document.querySelector('#attacksBox').append(button)
+})
+
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
@@ -63,12 +42,15 @@ document.querySelectorAll('button').forEach((button) => {
   button.addEventListener('click', (e) => {
     console.log(e.currentTarget.innerHTML)
 
+    //emby attack options, depends on what you click?
     const selectedAttack = attacks[e.currentTarget.innerHTML]
     emby.attack({
     attack: selectedAttack,
     recipient: draggle,
     renderedSprites
   })
+
+  //draggle attack options?
   queue.push(() => {
     draggle.attack({
         attack: attacks.Tackle,
@@ -88,6 +70,7 @@ document.querySelectorAll('button').forEach((button) => {
   })
 })
 
+///an event listener for the dialogue box.
 document.querySelector('#dialogueBox').addEventListener('click', (e) =>{
     if(queue.length > 0 ){
         queue[0]()

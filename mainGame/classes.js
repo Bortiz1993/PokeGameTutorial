@@ -1,6 +1,6 @@
 //Timestamp 5:50
 class Sprite {
-     constructor({ position, image, frames = { max: 1, hold: 10 },name, sprites, animate = false, isEnemy = false, rotation = 0  }) {
+     constructor({position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0 }) {
       this.position = position;
       this.image = image;
       this.frames = {...frames, val: 0, elapsed: 0};
@@ -11,10 +11,8 @@ class Sprite {
       this.animate = animate
       this.sprites = sprites
       this.opacity = 1
-      this.health = 100
-      this.isEnemy = isEnemy
       this.rotation = rotation
-      this.name = name
+     
     }
     //what code do i need to use to draw something in the canvas.
     draw() {
@@ -52,106 +50,136 @@ class Sprite {
       else this.frames.val = 0
       }
     }
-    attack({attack, recipient, renderedSprites}){
-      document.querySelector('#dialogueBox').style.display = 'block'
-      document.querySelector('#dialogueBox').innerHTML = this.name + ' used ' + attack.name  
-      //placing the code in line 44-48 makes it globally avaliable inside here:
-      let healthBar = '#draggleHealthBar'
-      if(this.isEnemy) healthBar = '#playerHealthBar'
 
-      let rotation = 1
+       }
 
-      this.health -= attack.damage
-
-      switch (attack.name){
-        case 'Fireball':
-          const fireballImage = new Image()
-          fireballImage.src = '../img/fireball.png'
-          const fireball = new Sprite ({
-            position: {
-              x: this.position.x,
-              y: this.position.y
-            },
-            image: fireballImage,
-            frames: {
-              max: 4,
-              hold: 10
-
-            },
-            animate: true,
-            rotation
-          })
-         
-          renderedSprites.splice(1,0, fireball)
-
-          gsap.to(fireball.position,{
-            x: recipient.position.x,
-            y: recipient.position.y,
-            onComplete: () => {
-              gsap.to(healthBar, {
-                //we changed this
-                width: this.health + '%'
-              })
-              gsap.to(recipient.position, {
-                x: recipient.position.x + 10,
-                yoyo: true,
-                repeat: 5,
-                duration: 0.08
-              })
-              gsap.to(recipient, {
-               
-                opacity:0,
-                repeat: 5,
-                yoyo: true,
-                duration: 0.08
-              })
-              renderedSprites.splice(1, 1)
-            }
-          })
-          break
-
-        case 'Tackle':
-          const tl = gsap.timeline()
-          //this depletes the health every time.
-          let movementDistance = 20
-          if(this.isEnemy) movementDistance = -20
+       class Monsters extends Sprite {
+        constructor({
+          position,
+          velocity,
+           image,
+            frames = { max: 1, hold: 10 },
+             sprites,
+              animate = false,
+               rotation = 0,
+                isEnemy = false,
+                 name,
+                 attacks 
+                }){
+                  super({
+                    position,
+                    velocity,
+                    image,
+                    frames,
+                    sprites,
+                    animate,
+                    rotation
+                  })
+          this.health = 100
+          this.isEnemy = isEnemy
+          this.name = name
+          this.attacks = attacks
+        }
+        attack({attack, recipient, renderedSprites}){
+          document.querySelector('#dialogueBox').style.display = 'block'
+          document.querySelector('#dialogueBox').innerHTML = this.name + ' used ' + attack.name  
+          //placing the code in line 44-48 makes it globally avaliable inside here:
+          let healthBar = '#draggleHealthBar'
+          if(this.isEnemy) healthBar = '#playerHealthBar'
     
-          tl.to(this.position,{
-            x: this.position.x - movementDistance
-          })
-          .to(this.position, {
-            x: this.position.x + movementDistance * 2,
-            duration: 0.1,
-            onComplete: () => {
-              // this is what happens when enemy gets hit.
-              gsap.to(healthBar, {
-                width: this.health + '%'
+          let rotation = 1
+    
+          this.health -= attack.damage
+    
+          switch (attack.name){
+            case 'Fireball':
+              const fireballImage = new Image()
+              fireballImage.src = '../img/fireball.png'
+              const fireball = new Sprite ({
+                position: {
+                  x: this.position.x,
+                  y: this.position.y
+                },
+                image: fireballImage,
+                frames: {
+                  max: 4,
+                  hold: 10
+    
+                },
+                animate: true,
+                rotation
               })
-              gsap.to(recipient.position, {
-                x: recipient.position.x + 10,
-                yoyo: true,
-                repeat: 5,
-                duration: 0.08
-              })
-              gsap.to(recipient, {
-               
-                opacity:0,
-                repeat: 5,
-                yoyo: true,
-                duration: 0.08,
+             
+              renderedSprites.splice(1,0, fireball)
+    
+              gsap.to(fireball.position,{
+                x: recipient.position.x,
+                y: recipient.position.y,
                 onComplete: () => {
-                  console.log('done?')
+                  gsap.to(healthBar, {
+                    //we changed this
+                    width: this.health + '%'
+                  })
+                  gsap.to(recipient.position, {
+                    x: recipient.position.x + 10,
+                    yoyo: true,
+                    repeat: 5,
+                    duration: 0.08
+                  })
+                  gsap.to(recipient, {
+                   
+                    opacity:0,
+                    repeat: 5,
+                    yoyo: true,
+                    duration: 0.08
+                  })
+                  renderedSprites.splice(1, 1)
                 }
               })
-                // console.log('done')
-            }
-          })
-          .to(this.position, {
-            x: this.position.x
-          })
-        break;
-      }
-      }
+              break
+    
+            case 'Tackle':
+              const tl = gsap.timeline()
+              //this depletes the health every time.
+              let movementDistance = 20
+              if(this.isEnemy) movementDistance = -20
+        
+              tl.to(this.position,{
+                x: this.position.x - movementDistance
+              })
+              .to(this.position, {
+                x: this.position.x + movementDistance * 2,
+                duration: 0.1,
+                onComplete: () => {
+                  // this is what happens when enemy gets hit.
+                  gsap.to(healthBar, {
+                    width: this.health + '%'
+                  })
+                  gsap.to(recipient.position, {
+                    x: recipient.position.x + 10,
+                    yoyo: true,
+                    repeat: 5,
+                    duration: 0.08
+                  })
+                  gsap.to(recipient, {
+                   
+                    opacity:0,
+                    repeat: 5,
+                    yoyo: true,
+                    duration: 0.08,
+                    onComplete: () => {
+                      console.log('done?')
+                    }
+                  })
+                    // console.log('done')
+                }
+              })
+              .to(this.position, {
+                x: this.position.x
+              })
+            break;
+          }
+          }
        }
 
   class Boundary {
