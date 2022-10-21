@@ -51,25 +51,33 @@ document.querySelectorAll('button').forEach((button) => {
   })
 
   //draggle attack options?
+const randomAttack =
+draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
+
   queue.push(() => {
     draggle.attack({
-        attack: attacks.Tackle,
+        attack: randomAttack,
         recipient: emby,
         renderedSprites
     })
   })
 
-  queue.push(() => {
-    draggle.attack({
-        attack: attacks.Fireball,
-        recipient: emby,
-        renderedSprites
-    })
-  })
+//   queue.push(() => {
+//     draggle.attack({
+//         attack: attacks.Fireball,
+//         recipient: emby,
+//         renderedSprites
+//     })
+//   })
 
-  })
 })
 
+button.addEventListener('mouseenter', (e) =>{
+    const selectedAttack = attacks[e.currentTarget.innerHTML]
+    document.querySelector('#attackType').innerHTML = selectedAttack.type
+    document.querySelector('#attackType').style.color = selectedAttack.color
+})
+})
 ///an event listener for the dialogue box.
 document.querySelector('#dialogueBox').addEventListener('click', (e) =>{
     if(queue.length > 0 ){

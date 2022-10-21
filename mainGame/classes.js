@@ -92,6 +92,47 @@ class Sprite {
           this.health -= attack.damage
     
           switch (attack.name){
+            case 'Iceshot':
+            const iceshotImage = new Image()
+            iceshotImage.src = '../img/iceshot.png'
+            const iceshot = new Sprite ({
+              position: {
+                x: this.position.x,
+                y: this.position.y
+              },
+              image: iceshotImage,
+              frame:{
+                max: 1,
+                animate: true,
+                rotation
+              }
+            })
+            renderedSprites.splice(1,0, iceshot)
+            gsap.to(iceshot.position,{
+              x: recipient.position.x,
+              y: recipient.position.y,
+              onComplete: () => {
+                gsap.to(healthBar, {
+                  //we changed this
+                  width: this.health + '%'
+                })
+                gsap.to(recipient.position, {
+                  x: recipient.position.x + 10,
+                  yoyo: true,
+                  repeat: 5,
+                  duration: 0.08
+                })
+                gsap.to(recipient, {
+                 
+                  opacity:1,
+                  repeat: 5,
+                  yoyo: true,
+                  duration: 0.08
+                })
+                renderedSprites.splice(1, 1)
+              }
+            })
+            break
             case 'Fireball':
               const fireballImage = new Image()
               fireballImage.src = '../img/fireball.png'
