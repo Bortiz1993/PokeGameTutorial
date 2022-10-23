@@ -50,46 +50,52 @@
         left:0;
          bottom: 0;
           opacity: 0;
-           pointer-events: none;">
+           pointer-events: none;
+           z-index: 10;
+           ">
            </div>
-           <!-- Represents Health bar of draggle --->
-           <div style="
-            background-color:white;
-            width:250px;
-            position: absolute;
-            top:50px;
-            left: 50px;
-            border: 4px black solid;
-            padding: 12px;">
+           
+        
+    <canvas id="canvas"></canvas>
+    <div id="userInterface">
+        <!-- Represents Health bar of draggle --->
+        <div style="
+        background-color:white;
+        width:250px;
+        position: absolute;
+        top:50px;
+        left: 50px;
+        border: 4px black solid;
+        padding: 12px;">
 
 <h1 style="font-size: 16px;">Draggle</h1>
 <div style="position: relative;">
 <div style="
-        height: 5px;
-        background-color: #ccc;
-        margin-top: 10px;
+    height: 5px;
+    background-color: #ccc;
+    margin-top: 10px;
 "></div>
 <div id="draggleHealthBar"
 style="
-        height: 5px;
-        background-color: green;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-"></div>
-    </div>
-    </div>
-
-    <!-- health bar of Emby -->
-    <div style="
-    background-color:white;
-    width:250px;
+    height: 5px;
+    background-color: green;
     position: absolute;
-    top: 350px;
-    left: 700px;
-    border: 4px black solid;
-    padding: 12px;">
+    top: 0;
+    left: 0;
+    right: 0;
+"></div>
+</div>
+</div>
+
+<!-- health bar of Emby -->
+<div style="
+background-color:white;
+width:250px;
+position: absolute;
+top: 350px;
+left: 700px;
+border: 4px black solid;
+padding: 12px;">
 
 <h1 style="font-size: 16px;">Emby</h1>
 <div style="position: relative;">
@@ -110,8 +116,8 @@ right: 0;
 "></div>
 </div>
 </div>
-        
-    <canvas id="canvas"></canvas>
+
+
     <div style="
     background-color: white;
     height: 140px;
@@ -152,6 +158,7 @@ right: 0;
         <h1 id="attackType"
         style="font-size: 16px;">Attack Type</h1>
     </div>
+</div>
 </div>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js" 

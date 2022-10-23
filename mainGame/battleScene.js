@@ -22,9 +22,13 @@ emby.attacks.forEach((attack) =>{
     document.querySelector('#attacksBox').append(button)
 })
 
+let battleAnimationId
+
 function animateBattle() {
-  window.requestAnimationFrame(animateBattle);
+  battleAnimationId = window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
+
+  console.log(battleAnimationId)
 
   renderedSprites.forEach((sprite) => {
     sprite.draw()
@@ -50,7 +54,28 @@ document.querySelectorAll('button').forEach((button) => {
     renderedSprites
   })
 
-  //draggle attack options?
+  if(draggle.health <= 0){
+    queue.push(() => {
+      draggle.faint()
+    })
+    queue.push(() => {
+      //fades back to black
+      gsap.to('#overlappingDIV', {
+        opacity: 1,
+        onComplete: () => {
+          cancelAnimationFrame(battleAnimationId)
+          animate()
+          document.querySelector('#userInterface').style.display = 'none'
+          gsap.to('#overlappingDIV', {
+            opacity: 0
+          })
+        }
+      })
+    })
+  }
+
+  
+  //draggle or enemy attack options?
 const randomAttack =
 draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
 
@@ -60,8 +85,15 @@ draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
         recipient: emby,
         renderedSprites
     })
+    if(emby.health <= 0){
+      queue.push(() =>{
+        emby.faint()
+      })
+      
+    }
   })
 
+  //do this if you want one monster to do multiple attacks.
 //   queue.push(() => {
 //     draggle.attack({
 //         attack: attacks.Fireball,

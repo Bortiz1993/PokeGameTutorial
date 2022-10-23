@@ -80,6 +80,19 @@ class Sprite {
           this.name = name
           this.attacks = attacks
         }
+
+        faint(){
+          document.querySelector('#dialogueBox').innerHTML = this.name + ' fainted! '
+        gsap.to(this.position, {
+          //animation goes downwards.
+          y: this.position.y + 20
+        })
+        gsap.to(this, {
+          opacity: 0
+        })
+        }
+
+        //code for the dialogue box
         attack({attack, recipient, renderedSprites}){
           document.querySelector('#dialogueBox').style.display = 'block'
           document.querySelector('#dialogueBox').innerHTML = this.name + ' used ' + attack.name  
@@ -89,7 +102,7 @@ class Sprite {
     
           let rotation = 1
     
-          this.health -= attack.damage
+          recipient.health -= attack.damage
     
           switch (attack.name){
             case 'Iceshot':
@@ -114,7 +127,7 @@ class Sprite {
               onComplete: () => {
                 gsap.to(healthBar, {
                   //we changed this
-                  width: this.health + '%'
+                  width: recipient.health + '%'
                 })
                 gsap.to(recipient.position, {
                   x: recipient.position.x + 10,
@@ -159,7 +172,7 @@ class Sprite {
                 onComplete: () => {
                   gsap.to(healthBar, {
                     //we changed this
-                    width: this.health + '%'
+                    width: recipient.health + '%'
                   })
                   gsap.to(recipient.position, {
                     x: recipient.position.x + 10,
@@ -194,7 +207,7 @@ class Sprite {
                 onComplete: () => {
                   // this is what happens when enemy gets hit.
                   gsap.to(healthBar, {
-                    width: this.health + '%'
+                    width: recipient.health + '%'
                   })
                   gsap.to(recipient.position, {
                     x: recipient.position.x + 10,
