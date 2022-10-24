@@ -10,41 +10,42 @@ const battleBackground = new Sprite({
 });
 
 
-const draggle = new Monsters(monsters.Draggle);
-const emby = new Monsters(monsters.Emby);
-console.log(emby)
-console.log(draggle)
-const renderedSprites = [draggle, emby]
+let draggle
+let emby
+let renderedSprites
+let battleAnimationId
+let queue
+// console.log(emby)
+// console.log(draggle)
+
+
+
+function initBattle()  {
+document.querySelector('#userInterface').style.display = 'block'
+document.querySelector('#dialogueBox').style.display = 'none'
+document.querySelector('#draggleHealthBar').style.width = '100%'
+document.querySelector('#playerHealthBar').style.width = '100%'
+document.querySelector('#attacksBox').replaceChildren()
+
+  draggle = new Monsters(monsters.Draggle)
+  emby = new Monsters(monsters.Emby)
+  
+
+  renderedSprites = [draggle, emby]
+
+  queue = []
 
 emby.attacks.forEach((attack) =>{
-    const button = document.createElement('button')
-    button.innerHTML = attack.name
-    document.querySelector('#attacksBox').append(button)
+  const button = document.createElement('button')
+  button.innerHTML = attack.name
+  document.querySelector('#attacksBox').append(button)
+
 })
-
-let battleAnimationId
-
-function animateBattle() {
-  battleAnimationId = window.requestAnimationFrame(animateBattle);
-  battleBackground.draw();
-
-  console.log(battleAnimationId)
-
-  renderedSprites.forEach((sprite) => {
-    sprite.draw()
-  })
-  // console.log("animating battle");
-}
-
-// animate();
-animateBattle();
-
-const queue = []
 
 //button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
 document.querySelectorAll('button').forEach((button) => {
   button.addEventListener('click', (e) => {
-    console.log(e.currentTarget.innerHTML)
+    // console.log(e.currentTarget.innerHTML)
 
     //emby attack options, depends on what you click?
     const selectedAttack = attacks[e.currentTarget.innerHTML]
@@ -69,12 +70,13 @@ document.querySelectorAll('button').forEach((button) => {
           gsap.to('#overlappingDIV', {
             opacity: 0
           })
+          battle.initiated = false
+          audio.Map.play()
         }
       })
     })
   }
 
-  
   //draggle or enemy attack options?
 const randomAttack =
 draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
@@ -85,23 +87,29 @@ draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
         recipient: emby,
         renderedSprites
     })
+
     if(emby.health <= 0){
-      queue.push(() =>{
+      queue.push(() => {
         emby.faint()
       })
-      
+      queue.push(() => {
+        //fades back to black
+        gsap.to('#overlappingDIV', {
+          opacity: 1,
+          onComplete: () => {
+            cancelAnimationFrame(battleAnimationId)
+            animate()
+            document.querySelector('#userInterface').style.display = 'none'
+            gsap.to('#overlappingDIV', {
+              opacity: 0
+            })
+            battle.initiated = 
+            audio.Map.play()
+          }
+        })
+      })
     }
   })
-
-  //do this if you want one monster to do multiple attacks.
-//   queue.push(() => {
-//     draggle.attack({
-//         attack: attacks.Fireball,
-//         recipient: emby,
-//         renderedSprites
-//     })
-//   })
-
 })
 
 button.addEventListener('mouseenter', (e) =>{
@@ -110,6 +118,29 @@ button.addEventListener('mouseenter', (e) =>{
     document.querySelector('#attackType').style.color = selectedAttack.color
 })
 })
+
+}
+console.log(emby)
+console.log(draggle)
+console.log(renderedSprites)
+
+function animateBattle() {
+  battleAnimationId = window.requestAnimationFrame(animateBattle);
+  battleBackground.draw();
+
+  console.log(battleAnimationId)
+
+  renderedSprites.forEach((sprite) => {
+    sprite.draw()
+  })
+  // console.log("animating battle");
+}
+
+animate();
+// initBattle();
+// animateBattle();
+
+
 ///an event listener for the dialogue box.
 document.querySelector('#dialogueBox').addEventListener('click', (e) =>{
     if(queue.length > 0 ){

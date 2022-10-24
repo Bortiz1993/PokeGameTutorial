@@ -3,6 +3,7 @@ const c = canvas.getContext("2d");
 const bodyBlack = document.querySelector("body");
 bodyBlack.style.background = "black";
 
+
 // Canvas Dimensions
 canvas.width = 1024;
 canvas.height = 576;
@@ -229,11 +230,16 @@ function animate() {
       ) {
         //ends the loop
         console.log("activate battle!");
-        // console.log(animationId)
         //deactivate current animation loop
         window.cancelAnimationFrame(animationId);
 
-        battle.initiated = true;
+        // This causes the music to stop, initbattle starts battle music       
+        audio.Map.stop()
+        audio.initBattle.play()
+        audio.battle.play()
+
+
+        battle.initiated = true
         gsap.to("#overlappingDIV", {
           opacity: 1,
           repeat: 3,
@@ -244,6 +250,7 @@ function animate() {
               opacity: 1,
               duration: 0.4,
               onComplete() {
+                initBattle();
                 animateBattle();
                 gsap.to("#overlappingDIV", {
                   opacity: 0,
@@ -430,3 +437,11 @@ window.addEventListener("keyup", (e) => {
       break;
   }
 });
+
+let click = false
+addEventListener('click', () => {
+ if(!click) {
+  audio.Map.play()
+  click = true
+ }
+})

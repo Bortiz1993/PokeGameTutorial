@@ -2,12 +2,13 @@
 class Sprite {
      constructor({position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0 }) {
       this.position = position;
-      this.image = image;
+      this.image = new Image()
       this.frames = {...frames, val: 0, elapsed: 0};
       this.image.onload = () => {
         this.width = this.image.width / this.frames.max;
         this.height = this.image.height;
       }
+      this.image.src = image.src
       this.animate = animate
       this.sprites = sprites
       this.opacity = 1
@@ -90,6 +91,8 @@ class Sprite {
         gsap.to(this, {
           opacity: 0
         })
+        audio.battle.stop()
+        audio.victory.play()
         }
 
         //code for the dialogue box
@@ -147,6 +150,7 @@ class Sprite {
             })
             break
             case 'Fireball':
+              audio.initFireball.play()
               const fireballImage = new Image()
               fireballImage.src = '../img/fireball.png'
               const fireball = new Sprite ({
@@ -170,6 +174,8 @@ class Sprite {
                 x: recipient.position.x,
                 y: recipient.position.y,
                 onComplete: () => {
+                  //enemy gets hit with fireball
+                  audio.fireballHit.play()
                   gsap.to(healthBar, {
                     //we changed this
                     width: recipient.health + '%'
@@ -206,6 +212,8 @@ class Sprite {
                 duration: 0.1,
                 onComplete: () => {
                   // this is what happens when enemy gets hit.
+                  audio.tackleHit.play()
+
                   gsap.to(healthBar, {
                     width: recipient.health + '%'
                   })
