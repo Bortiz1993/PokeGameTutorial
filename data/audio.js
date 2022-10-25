@@ -39,5 +39,11 @@ const audio = {
         src: '../Audio/victory.wav',
         html5: true,
         volume: 0.4
+    }),
+
+    iceShot: new Howl({
+        src: '../Audio/spell4.wav',
+        html5: true,
+        volume: 0.5
     })
 }

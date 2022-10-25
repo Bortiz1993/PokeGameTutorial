@@ -108,7 +108,9 @@ class Sprite {
           recipient.health -= attack.damage
     
           switch (attack.name){
+            
             case 'Iceshot':
+              audio.iceShot.play()
             const iceshotImage = new Image()
             iceshotImage.src = '../img/iceshot.png'
             const iceshot = new Sprite ({
@@ -128,6 +130,7 @@ class Sprite {
               x: recipient.position.x,
               y: recipient.position.y,
               onComplete: () => {
+                
                 gsap.to(healthBar, {
                   //we changed this
                   width: recipient.health + '%'
@@ -140,7 +143,7 @@ class Sprite {
                 })
                 gsap.to(recipient, {
                  
-                  opacity:1,
+                  opacity:0,
                   repeat: 5,
                   yoyo: true,
                   duration: 0.08

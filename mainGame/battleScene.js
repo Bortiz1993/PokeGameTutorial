@@ -103,7 +103,7 @@ draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
             gsap.to('#overlappingDIV', {
               opacity: 0
             })
-            battle.initiated = 
+            battle.initiated = false
             audio.Map.play()
           }
         })
