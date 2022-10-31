@@ -15,7 +15,7 @@ class Sprite {
       this.rotation = rotation
      
     }
-    //what code do i need to use to draw something in the canvas.
+    //this is the code that I need to use to draw something in the canvas.
     draw() {
       c.save()
       c.translate(
@@ -139,9 +139,10 @@ class Sprite {
                   x: recipient.position.x + 10,
                   yoyo: true,
                   repeat: 5,
-                  duration: 0.08
+                  duration: 0.08,
+
                 })
-                gsap.to(recipient, {
+                gsap.to( recipient, {
                  
                   opacity:0,
                   repeat: 5,

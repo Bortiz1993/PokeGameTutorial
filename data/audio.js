@@ -2,17 +2,17 @@ const audio = {
     Map: new Howl({
      src: '../Audio/Apotos (Day) - Sonic Unleashed [OST] (192 kbps).mp3',
         html5: true,
-        volume: 0.3
+        volume: 0.1
     }),
 
     initBattle: new Howl({
         src: '../Audio/InitBattle.wav',
         html5: true,
-        volume: 0.2
+        volume: 0.1
     }),
 
     battle: new Howl({
-        src: '../Audio/battle.mp3',
+        src: '../Audio/Mega Man Battle Network 3 OST - T25_ Boss Battle! (Boss Theme) (320 kbps).mp3',
         html5: true,
         volume: 0.2
     }),
@@ -44,6 +44,6 @@ const audio = {
     iceShot: new Howl({
         src: '../Audio/spell4.wav',
         html5: true,
-        volume: 0.5
+        volume: 0.3
     })
 }

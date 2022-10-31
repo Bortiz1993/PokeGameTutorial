@@ -9,16 +9,16 @@ canvas.width = 1024;
 canvas.height = 576;
 
 const collisionsMap = [];
-for (let i = 0; i < collisions.length; i += 70) {
-  console.log(collisions);
-  collisionsMap.push(collisions.slice(i, 70 + i));
+for (let i = 0; i < collisions2.length; i += 70) {
+  console.log(collisions2);
+  collisionsMap.push(collisions2.slice(i, 70 + i));
 }
 
 ///.length; i += 70 is the actual length of the game map.It dosent like this for loop?
 const battleZonesMap = [];
-for (let i = 0; i < battleZonesData.length; i += 70) {
-  console.log(battleZonesData);
-  battleZonesMap.push(battleZonesData.slice(i, 70 + i));
+for (let i = 0; i < battleZonesData2.length; i += 70) {
+  console.log(battleZonesData2);
+  battleZonesMap.push(battleZonesData2.slice(i, 70 + i));
 }
 //boundary coordinates and measurements
 
@@ -26,8 +26,8 @@ const boundaries = [];
 
 //Player sprite starting position coordinates
 const offset = {
-  x: -210,
-  y: -400,
+  x: -735,
+  y: -650,
 };
 
 collisionsMap.forEach((row, i) => {
@@ -64,10 +64,10 @@ battleZonesMap.forEach((row, i) => {
 });
 
 const image = new Image();
-image.src = "../img/PokeMap.png";
+image.src = "../img/ChrisImages/PelletTown.png";
 
 const foregroundImage = new Image();
-foregroundImage.src = "../img/foregroundObjects.png";
+foregroundImage.src = "../img/ChrisImages/foregroundObjects2.png";
 console.log(foregroundImage.src);
 
 const playerImageDown = new Image();
@@ -441,7 +441,7 @@ window.addEventListener("keyup", (e) => {
 let click = false
 addEventListener('click', () => {
  if(!click) {
-  audio.Map.play()
+  // audio.Map.play()
   click = true
  }
 })
