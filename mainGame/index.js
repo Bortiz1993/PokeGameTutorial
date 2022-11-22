@@ -174,7 +174,7 @@ const battle = {
 
 function animate() {
   const animationId = window.requestAnimationFrame(animate);
-  console.log(animationId);
+  // console.log(animationId);
   background.draw();
   boundaries.forEach((boundary) => {
     boundary.draw();

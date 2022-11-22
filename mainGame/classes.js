@@ -1,4 +1,4 @@
-//Timestamp 5:50
+
 class Sprite {
      constructor({position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0 }) {
       this.position = position;
@@ -24,7 +24,7 @@ class Sprite {
       )
       c.rotate(this.rotation)
       c.translate(
-        -this.position.x - this.width /2,
+        -this.position.x - this.width / 2,
         -this.position.y - this.height / 2
       )
       c.globalAlpha = this.opacity
@@ -80,20 +80,37 @@ class Sprite {
           this.isEnemy = isEnemy
           this.name = name
           this.attacks = attacks
+        
         }
 
+        // monster gets defeated
         faint(){
           document.querySelector('#dialogueBox').innerHTML = this.name + ' fainted! '
+          
         gsap.to(this.position, {
           //animation goes downwards.
-          y: this.position.y + 20
+          y: this.position.y + 20 - 20
         })
+        // onComplete = () =>{
+        //   gsap.to(this.position,{
+        //     y: this.position.y - 20})
+        // its working but its probably the wrong spot? 
+        // }
+
         gsap.to(this, {
-          opacity: 0
+          opacity: 0,
         })
+
+      
         audio.battle.stop()
         audio.victory.play()
         }
+        
+        // draggleBattlePosition(){
+        //   gsap.to(this.position, {
+        //     y: this.position.y - 20
+        //   })
+        // }
 
         //code for the dialogue box
         attack({attack, recipient, renderedSprites}){

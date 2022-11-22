@@ -18,7 +18,18 @@ let queue
 // console.log(emby)
 // console.log(draggle)
 
+function debounce(cb, delay = 1000){
+  let timeout
 
+  //debounce waits one second before it the function fires
+
+  return(...args) => {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+          cb(...args)
+      }, delay)
+  }
+}
 
 function initBattle()  {
 document.querySelector('#userInterface').style.display = 'block'
@@ -42,22 +53,67 @@ emby.attacks.forEach((attack) =>{
 
 })
 
-//button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
-document.querySelectorAll('button').forEach((button) => {
-  button.addEventListener('click', (e) => {
-    // console.log(e.currentTarget.innerHTML)
+const attackActions = (e) => {
 
-    //emby attack options, depends on what you click?
-    const selectedAttack = attacks[e.currentTarget.innerHTML]
-    emby.attack({
-    attack: selectedAttack,
-    recipient: draggle,
-    renderedSprites
+  console.log(e.currentTarget.innerHTML)
+
+  //emby attack options, depends on what you click?
+  const selectedAttack = attacks[e.currentTarget.innerHTML]
+  emby.attack({
+  attack: selectedAttack,
+  recipient: draggle,
+  renderedSprites
+})
+
+if(draggle.health <= 0){
+  queue.push(() => {
+    console.log(draggle.position.y)
+    draggle.faint()
+    // draggle.draggleBattlePosition()
+    //I left off here, made this custom function.
+    // draggle.position.y - 20
+    
+  })
+  queue.push(() => {
+    //fades back to black
+    gsap.to('#overlappingDIV', {
+      opacity: 1,
+      onComplete: () => {
+        cancelAnimationFrame(battleAnimationId)
+        animate()
+        document.querySelector('#userInterface').style.display = 'none'
+        gsap.to('#overlappingDIV', {
+          opacity: 0
+        })
+        battle.initiated = false
+        audio.Map.play()
+       
+      }
+    })
+  })
+  // queue.push(() => {
+  //   draggle.position.y - 20
+  //   console.log(draggle.position.y, "draggle position faint")
+  
+    ///TODO draggle shifts down and shifts up on final attack. Watch video
+  // })
+  
+}
+
+//draggle or enemy attack options?
+const randomAttack =
+draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
+
+queue.push(() => {
+  draggle.attack({
+      attack: randomAttack,
+      recipient: emby,
+      renderedSprites
   })
 
-  if(draggle.health <= 0){
+  if(emby.health <= 0){
     queue.push(() => {
-      draggle.faint()
+      emby.faint()
     })
     queue.push(() => {
       //fades back to black
@@ -76,41 +132,17 @@ document.querySelectorAll('button').forEach((button) => {
       })
     })
   }
-
-  //draggle or enemy attack options?
-const randomAttack =
-draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
-
-  queue.push(() => {
-    draggle.attack({
-        attack: randomAttack,
-        recipient: emby,
-        renderedSprites
-    })
-
-    if(emby.health <= 0){
-      queue.push(() => {
-        emby.faint()
-      })
-      queue.push(() => {
-        //fades back to black
-        gsap.to('#overlappingDIV', {
-          opacity: 1,
-          onComplete: () => {
-            cancelAnimationFrame(battleAnimationId)
-            animate()
-            document.querySelector('#userInterface').style.display = 'none'
-            gsap.to('#overlappingDIV', {
-              opacity: 0
-            })
-            battle.initiated = false
-            audio.Map.play()
-          }
-        })
-      })
-    }
-  })
 })
+}
+
+const updateDebounceText = debounce((test) =>{
+  console.log(test)
+attackActions(test)
+})
+
+//button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
+document.querySelectorAll('button').forEach((button) => {
+  button.addEventListener('click', (e) => updateDebounceText(e))
 
 button.addEventListener('mouseenter', (e) =>{
     const selectedAttack = attacks[e.currentTarget.innerHTML]
@@ -120,15 +152,15 @@ button.addEventListener('mouseenter', (e) =>{
 })
 
 }
-console.log(emby)
-console.log(draggle)
-console.log(renderedSprites)
+// console.log(emby)
+// console.log(draggle)
+// console.log(renderedSprites)
 
 function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
 
-  console.log(battleAnimationId)
+  // console.log(battleAnimationId)
 
   renderedSprites.forEach((sprite) => {
     sprite.draw()
