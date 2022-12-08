@@ -49,10 +49,6 @@ emby.attacks.forEach((attack) =>{
 
 })
 
-// const attackActions = (e) => {
-
-
-
   //emby attack options, depends on what you click?
   document.querySelectorAll('button').forEach((button) => {
     const debounce = (func, delay) =>{
@@ -147,7 +143,7 @@ if(emby.health <= 0){
       // alert("Hello\nNo matter how many times you" +
       //     "click the debounce button, I get " +
       //     "executed once every 3 seconds!!")
-                      }, 800));
+                      }, 500));
 
 //button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
 
@@ -186,4 +182,4 @@ document.querySelector('#dialogueBox').addEventListener('click', (e) => {
         queue.shift()
     } else e.currentTarget.style.display = 'none';
     // console.log('clicked Dialogue!')
-})
+}) 

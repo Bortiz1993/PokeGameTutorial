@@ -438,10 +438,12 @@ window.addEventListener("keyup", (e) => {
   }
 });
 
-let click = false
-addEventListener('click', () => {
- if(!click) {
-  // audio.Map.play()
-  click = true
- }
-})
+// let click = false
+// addEventListener('click', () => {
+//  if(!click) {
+//   audio.Map.play()
+  
+//   click = true
+//   // audio.Map.restart()
+//  }
+// })
