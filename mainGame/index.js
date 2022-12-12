@@ -64,23 +64,23 @@ battleZonesMap.forEach((row, i) => {
 });
 
 const image = new Image();
-image.src = "../img/ChrisImages/PelletTown.png";
+image.src = "./img/ChrisImages/PelletTown.png";
 
 const foregroundImage = new Image();
-foregroundImage.src = "../img/ChrisImages/foregroundObjects2.png";
+foregroundImage.src = "./img/ChrisImages/foregroundObjects2.png";
 console.log(foregroundImage.src);
 
 const playerImageDown = new Image();
-playerImageDown.src = "../img/playerDown.png";
+playerImageDown.src = "./img/playerDown.png";
 
 const playerImageUp = new Image();
-playerImageUp.src = "../img/playerUp.png";
+playerImageUp.src = "./img/playerUp.png";
 
 const playerImageRight = new Image();
-playerImageRight.src = "../img/playerRight.png";
+playerImageRight.src = "./img/playerRight.png";
 
 const playerImageLeft = new Image();
-playerImageLeft.src = "../img/playerLeft.png";
+playerImageLeft.src = "./img/playerLeft.png";
 
 //This loads the map as soon as possible.
 image.onload = () => {

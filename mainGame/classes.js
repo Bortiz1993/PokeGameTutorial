@@ -129,7 +129,7 @@ class Sprite {
             case 'Iceshot':
               audio.iceShot.play()
             const iceshotImage = new Image()
-            iceshotImage.src = '../img/iceshot.png'
+            iceshotImage.src = './img/iceshot.png'
             const iceshot = new Sprite ({
               position: {
                 x: this.position.x,
@@ -173,7 +173,7 @@ class Sprite {
             case 'Fireball':
               audio.initFireball.play()
               const fireballImage = new Image()
-              fireballImage.src = '../img/fireball.png'
+              fireballImage.src = './img/fireball.png'
               const fireball = new Sprite ({
                 position: {
                   x: this.position.x,
