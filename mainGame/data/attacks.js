@@ -7,15 +7,15 @@ const attacks = {
           },
     Fireball: {
         name: 'Fireball',
-        damage: 80,
+        damage: 20,
         type: 'Fire',
         color: 'red'
     },
 
     Iceshot:{
         name: 'Iceshot',
-        damage: 24,
+        damage: 20,
         type: 'Ice',
-        color: 'blue'
+        // color: 'blue'
     }
 }

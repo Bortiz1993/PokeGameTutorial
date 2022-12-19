@@ -1,0 +1,66 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/Pellet Town.tmx",
+    "expandedProjectPaths": [
+    ],
+    "exportAsImage.includeBackgroundColor": false,
+    "exportAsImage.useCurrentScale": true,
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/img/AnotherTileSet.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/Pellet Town.tmx": {
+            "scale": 0.8629166666666667,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 419.507484307098,
+                "y": 240.46354418155482
+            }
+        },
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/PelletTownSheet.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/collisionTileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/pokemonStyleGameTileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset",
+    "last.externalTilesetPath": "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset",
+    "last.imagePath": "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset",
+    "map.height": 40,
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.tileHeight": 12,
+    "map.tileWidth": 12,
+    "map.width": 70,
+    "openFiles": [
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/Pellet Town.tmx"
+    ],
+    "project": "untitled.tiled-project",
+    "recentFiles": [
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/PelletTownSheet.tsx",
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/Pellet Town.tmx",
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/collisionTileset.tsx",
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/pokemonStyleGameTileset.tsx",
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/img/AnotherTileSet.tsx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 12,
+        "width": 12
+    }
+}

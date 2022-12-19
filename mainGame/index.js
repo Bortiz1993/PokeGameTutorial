@@ -64,11 +64,12 @@ battleZonesMap.forEach((row, i) => {
 });
 
 const image = new Image();
-image.src = "./img/ChrisImages/PelletTown.png";
+image.src = "./img/ChrisImages/pelletTown.png";
+console.log(image)
 
 const foregroundImage = new Image();
 foregroundImage.src = "./img/ChrisImages/foregroundObjects2.png";
-console.log(foregroundImage.src);
+// console.log(foregroundImage.src);
 
 const playerImageDown = new Image();
 playerImageDown.src = "./img/playerDown.png";
