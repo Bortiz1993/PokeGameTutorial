@@ -92,7 +92,8 @@ charactersMap.forEach((row, i) => {
           },
           scale: 1,
           animate: true,
-          dialogue: ['Hello', 'Mister, be careful with a creature named Draggle!', 'It has ice attacks!']
+          dialogue: [
+        'GARY: Hello Andrew!', ' Be on the look out for a creature named Draggle!', 'I heard it has a crazy ice attack!']
         })
       )
     }
@@ -110,7 +111,7 @@ charactersMap.forEach((row, i) => {
             hold: 10
           },
           scale: 3,
-          dialogue: ['My back hurts!', 'Yeah I know I am old:(', 'The Draggle is scared of a RED attack but I cant remember what it was called?']
+          dialogue: ['OLD MAN: My back hurts!', 'Yeah I know I am old:(', 'The Draggle is scared of a RED attack but I cant remember what it was called?']
         })
       )
     }
