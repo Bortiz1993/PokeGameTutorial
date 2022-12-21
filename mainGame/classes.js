@@ -1,18 +1,28 @@
 
 class Sprite {
-     constructor({position, image, frames = { max: 1, hold: 10 }, sprites, animate = false, rotation = 0 }) {
+     constructor({
+      position,
+      velocity, 
+      image,
+      frames = { max: 1, hold: 10 },
+      sprites, 
+      animate = false,
+      rotation = 0,
+      scale = 1 
+    }) {
       this.position = position;
       this.image = new Image()
       this.frames = {...frames, val: 0, elapsed: 0};
       this.image.onload = () => {
-        this.width = this.image.width / this.frames.max;
-        this.height = this.image.height;
+        this.width = (this.image.width / this.frames.max) * scale
+        this.height = this.image.height * scale
       }
       this.image.src = image.src
       this.animate = animate
       this.sprites = sprites
       this.opacity = 1
       this.rotation = rotation
+      this.scale = scale
      
     }
     //this is the code that I need to use to draw something in the canvas.
@@ -51,8 +61,7 @@ class Sprite {
       else this.frames.val = 0
       }
     }
-
-       }
+    }
 
        class Monsters extends Sprite {
         constructor({
@@ -100,8 +109,6 @@ class Sprite {
         gsap.to(this, {
           opacity: 0,
         })
-
-      
         audio.battle.stop()
         audio.victory.play()
         }
@@ -121,11 +128,12 @@ class Sprite {
           if(this.isEnemy) healthBar = '#playerHealthBar'
     
           let rotation = 1
-    
+          if(this.isEnemy) rotation = -2.2
+          //i just added this, not sure what it does?
+
           recipient.health -= attack.damage
     
           switch (attack.name){
-            
             case 'Iceshot':
               audio.iceShot.play()
             const iceshotImage = new Image()
@@ -136,7 +144,7 @@ class Sprite {
                 y: this.position.y
               },
               image: iceshotImage,
-              frame:{
+              frames:{
                 max: 1,
                 animate: true,
                 rotation
@@ -160,7 +168,6 @@ class Sprite {
 
                 })
                 gsap.to( recipient, {
-                 
                   opacity:0,
                   repeat: 5,
                   yoyo: true,
@@ -201,6 +208,7 @@ class Sprite {
                     //we changed this
                     width: recipient.health + '%'
                   })
+
                   gsap.to(recipient.position, {
                     x: recipient.position.x + 10,
                     yoyo: true,
@@ -238,6 +246,7 @@ class Sprite {
                   gsap.to(healthBar, {
                     width: recipient.health + '%'
                   })
+
                   gsap.to(recipient.position, {
                     x: recipient.position.x + 10,
                     yoyo: true,
@@ -281,5 +290,33 @@ class Sprite {
   draw() {
     c.fillStyle = "rgba(0, 0, 0, 0.5)";
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
+  }
+}
+
+//I believe this class is the set up for any NPC?
+class Character extends Sprite {
+  constructor({
+    position,
+    velocity,
+    image,
+    frames = { max: 1, hold: 10},
+    sprites,
+    animate = false,
+    rotation = 0,
+    scale = 1,
+    dialogue = ['']
+  }){
+    super({
+      position,
+      velocity,
+      image,
+      frames,
+      sprites,
+      animate,
+      rotation,
+      scale
+    })
+    this.dialogue = dialogue
+    this.dialogueIndex = 0
   }
 }

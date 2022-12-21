@@ -1,7 +1,7 @@
 const canvas = document.querySelector("canvas");
 const c = canvas.getContext("2d");
-const bodyBlack = document.querySelector("body");
-bodyBlack.style.background = "black";
+// const bodyBlack = document.querySelector("body");
+// bodyBlack.style.background = "black";
 
 
 // Canvas Dimensions
@@ -10,20 +10,25 @@ canvas.height = 576;
 
 const collisionsMap = [];
 for (let i = 0; i < collisions2.length; i += 70) {
-  console.log(collisions2);
+  // console.log(collisions2);
   collisionsMap.push(collisions2.slice(i, 70 + i));
 }
 
 ///.length; i += 70 is the actual length of the game map.It dosent like this for loop?
 const battleZonesMap = [];
 for (let i = 0; i < battleZonesData2.length; i += 70) {
-  console.log(battleZonesData2);
+  // console.log(battleZonesData2);
   battleZonesMap.push(battleZonesData2.slice(i, 70 + i));
 }
 //boundary coordinates and measurements
 
-const boundaries = [];
+const charactersMap = []
+for (let i = 0; i < charactersMapData.length; i += 70){
+  charactersMap.push(charactersMapData.slice(i, 70 + i))
+}
+console.log(charactersMap)
 
+const boundaries = [];
 //Player sprite starting position coordinates
 const offset = {
   x: -735,
@@ -63,6 +68,68 @@ battleZonesMap.forEach((row, i) => {
   });
 });
 
+const characters = []
+const villagerImg = new Image()
+villagerImg.src = './img/ChrisImages/villager.png'
+
+const oldManImg = new Image()
+oldManImg.src = './img/ChrisImages/oldMan.png'
+
+charactersMap.forEach((row, i) => {
+  row.forEach((symbol, j) => {
+    //1026 for villager position
+    if(symbol === 1026){
+      characters.push(
+        new Character({
+          position: {
+            x: j * Boundary.width + offset.x,
+            y: i * Boundary.height + offset.y
+          },
+          image: villagerImg,
+          frames: {
+            max: 4,
+            hold: 200
+          },
+          scale: 1,
+          animate: true,
+          dialogue: ['Hello', 'Mister, be careful with a creature named Draggle!', 'It has ice attacks!']
+        })
+      )
+    }
+    //1031 === oldman
+    else if (symbol === 1031) {
+      characters.push(
+        new Character({
+          position: {
+            x: j * Boundary.width + offset.x + 10,
+            y: i * Boundary.height + offset.y + 5
+          },
+          image: oldManImg,
+          frames: {
+            max: 4,
+            hold: 10
+          },
+          scale: 3,
+          dialogue: ['My back hurts!', 'Yeah I know I am old:(', 'The Draggle is scared of a RED attack but I cant remember what it was called?']
+        })
+      )
+    }
+    //if the symbol dose not equal zero, push the boundaries?
+if(symbol !== 0){
+  boundaries.push(
+    new Boundary({
+      position: {
+        x: j * Boundary.width + offset.x + 3,
+        y: i * Boundary.height + offset.y + 20
+      }
+    })
+  )
+}
+  })
+})
+
+
+
 const image = new Image();
 image.src = "./img/ChrisImages/pelletTown.png";
 console.log(image)
@@ -84,9 +151,9 @@ const playerImageLeft = new Image();
 playerImageLeft.src = "./img/playerLeft.png";
 
 //This loads the map as soon as possible.
-image.onload = () => {
+// image.onload = () => {
   //x coordinate and Y coordinates
-  c.drawImage(image, -785, -650);
+  // c.drawImage(image, -785, -650);
   //Player down and canvas width divided by x coordinate 2 and y coordinate 0.
   // c.drawImage
   // (playerImageDown,
@@ -100,7 +167,7 @@ image.onload = () => {
   //  playerImageDown.height
   //  )
   //the equation above cuts the sprite sheet into one animation and it centers the character on the center coordinate?
-};
+// };
 
 //everytime i make a different reference to sprite, it will be different thats why this Class is here.
 
@@ -109,7 +176,7 @@ const player = new Sprite({
   position: {
     x: canvas.width / 2 - 192 / 4 / 2,
     ///x position 1024 divided by 2 minus 192 divided by 4 divided by 2 = player.position.x = 40
-    y: canvas.height / 2 - 37 / 2,
+    y: canvas.height / 2 - 68 / 2,
     /// y position 576 divided by 2 minus 37 divided by 2 = player.position.y = 125.5
     ///this height might be the reason why the character cannot move and it affects the battle patch activation?
   },
@@ -154,55 +221,51 @@ const keys = {
   },
   d: {
     pressed: false,
-  },
-};
+  }
+}
 
 //this const makes sure all objects in the game stay put.
-const movables = [background, ...boundaries, foreground, ...battleZones];
+const movables = [
+  background,
+  ...boundaries,
+  foreground,
+  ...battleZones,
+  ...characters
+]
 
-function rectangularCollision({ rectangle1, rectangle2 }) {
-  // console.log( rectangle2)
-  return (
-    rectangle1.position.x + rectangle1.width >= rectangle2.position.x &&
-    rectangle1.position.x <= rectangle2.position.x + rectangle2.width &&
-    rectangle1.position.y <= rectangle2.position.y + rectangle2.height &&
-    rectangle1.position.y + rectangle1.height >= rectangle2.position.y
-  );
-}
+const renderables = [
+  background,
+  ...boundaries,
+  ...battleZones,
+  ...characters,
+  player,
+  foreground
+]
+
 const battle = {
   initiated: false,
 };
 
 function animate() {
-  const animationId = window.requestAnimationFrame(animate);
+  const animationId = window.requestAnimationFrame(animate)
   // console.log(animationId);
-  background.draw();
-  boundaries.forEach((boundary) => {
-    boundary.draw();
-  });
+  renderables.forEach((renderable) => {
+    renderable.draw()
 
-  battleZones.forEach((battleZone) => {
-    battleZone.draw();
-  });
-
-  player.draw();
-  foreground.draw();
+  })
 
   //this if statement makes sure we are touching the tiles from all directions.
   //This basically activates the battle.
-  let moving = true;
-  player.animate = false;
+  let moving = true
+  player.animate = false
+
   if (battle.initiated) return;
 
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
-      // console.log(battleZone)
       // if(battleZone.battle){
       ///make hardcoded if statements for the battle being initiated.maybe put BigPatch in one variable and Small patch in another?
-
-      // console.log(battleZone.position.x, "BATTLE X", battleZone.position.y, "BATTLE Y")
-      // console.log(player.position.x, "playerPOSITION X", player.position.y, "playerPOSITION Y")
       const overlappingArea =
         (Math.min(
           player.position.x + player.width,
@@ -255,23 +318,29 @@ function animate() {
                 animateBattle();
                 gsap.to("#overlappingDIV", {
                   opacity: 0,
-                  duration: 0.4,
-                });
-              },
-            });
+                  duration: 0.4
+                })
+              }
+            })
             //activate a new animation loop
-          },
-        });
-        break;
+          }
+        })
+        break
       }
     }
   }
 
   //Player goes up, down boundary
-  player.animate = false;
+  // player.animate = false;
   if (keys.w.pressed && lastKey === "w") {
     player.animate = true;
     player.image = player.sprites.up;
+
+    checkForCharacterCollision({
+      characters,
+      player,
+      characterOffset: {x: 0, y: 3}
+    })
     // console.log(boundaries)
     for (let i = 0; i < boundaries.length; i++) {
       const boundary = boundaries[i];
@@ -283,8 +352,8 @@ function animate() {
             position: {
               x: boundary.position.x,
               y: boundary.position.y + 3,
-            },
-          },
+            }
+          }
         })
       ) {
         console.log("collisionW");
@@ -295,15 +364,22 @@ function animate() {
 
     if (moving)
       movables.forEach((movable) => {
-        movable.position.y += 3;
-      });
+        movable.position.y += 3
+      })
   }
   //player goes to the left, right boundary
   else if (keys.a.pressed && lastKey === "a") {
     player.animate = true;
     player.image = player.sprites.left;
+
+    checkForCharacterCollision({
+      characters,
+      player,
+      characterOffset: {x: 3, y: 0 }
+    })
+
     for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
+      const boundary = boundaries[i]
       if (
         rectangularCollision({
           rectangle1: player,
@@ -311,26 +387,34 @@ function animate() {
             ...boundary,
             position: {
               x: boundary.position.x + 3,
-              y: boundary.position.y,
-            },
-          },
+              y: boundary.position.y
+            }
+          }
         })
       ) {
         console.log("collisionA");
-        moving = false;
-        break;
+        moving = false
+        break
       }
     }
+
     if (moving)
       movables.forEach((movable) => {
         movable.position.x += 3;
       });
   } //player goes down, top boundary
   else if (keys.s.pressed && lastKey === "s") {
-    player.animate = true;
-    player.image = player.sprites.down;
+    player.animate = true
+    player.image = player.sprites.down
+
+    checkForCharacterCollision({
+      characters,
+      player,
+      characterOffset: {x: 0, y: -3}
+    })
+
     for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
+      const boundary = boundaries[i]
       if (
         rectangularCollision({
           rectangle1: player,
@@ -339,25 +423,33 @@ function animate() {
             position: {
               x: boundary.position.x,
               y: boundary.position.y - 3,
-            },
-          },
+            }
+          }
         })
       ) {
         console.log("collisionS");
-        moving = false;
-        break;
+        moving = false
+        break
       }
     }
     if (moving)
       movables.forEach((movable) => {
-        movable.position.y -= 3;
-      });
+        movable.position.y -= 3
+      })
+
   } //player goes right, left boundary
   else if (keys.d.pressed && lastKey === "d") {
     player.animate = true;
-    player.image = player.sprites.right;
+    player.image = player.sprites.right
+
+    checkForCharacterCollision({
+      characters,
+      player,
+      characterOffset: {x: -3, y: 0}
+    })
+
     for (let i = 0; i < boundaries.length; i++) {
-      const boundary = boundaries[i];
+      const boundary = boundaries[i]
       // console.log(boundary)
       if (
         rectangularCollision({
@@ -366,9 +458,9 @@ function animate() {
             ...boundary,
             position: {
               x: boundary.position.x - 3,
-              y: boundary.position.y,
-            },
-          },
+              y: boundary.position.y
+            }
+          }
         })
       ) {
         console.log("collisionD");
@@ -383,11 +475,41 @@ function animate() {
   }
 }
 
-
-
-let lastKey = "";
+let lastKey = ''
 window.addEventListener("keydown", (e) => {
-  switch (e.key) {
+  if (player.isInteracting) {
+    switch (e.key) {
+      case ' ':
+        player.interactionAsset.dialogueIndex++
+
+        const {dialogueIndex, dialogue} = player.interactionAsset
+        if(dialogueIndex <= dialogue.length - 1) {
+          document.querySelector('#characterDialogueBox').innerHTML =
+          player.interactionAsset.dialogue[dialogueIndex]
+          return
+        }
+
+        //finish conversation with NPC
+        player.isInteracting = false
+        player.interactionAsset.dialogueIndex = 0
+        document.querySelector('#characterDialogueBox').style.display = 'none'
+
+        break
+    }
+    return
+  }
+
+  switch (e.key){
+    case ' ':
+      if(!player.interactionAsset) return
+
+      //beginning of NPC conversation
+      const firstMessage = player.interactionAsset.dialogue[0]
+      document.querySelector('#characterDialogueBox').innerHTML = firstMessage
+      document.querySelector('#characterDialogueBox').style.display = 'flex'
+      player.isInteracting = true
+      break
+
     case "w":
       keys.w.pressed = true;
       lastKey = "w";
@@ -413,7 +535,7 @@ window.addEventListener("keydown", (e) => {
       break;
   }
   // console.log(keys);
-});
+})
 
 window.addEventListener("keyup", (e) => {
   switch (e.key) {
