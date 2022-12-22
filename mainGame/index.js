@@ -5,8 +5,10 @@ const c = canvas.getContext("2d");
 
 
 // Canvas Dimensions
-canvas.width = 1024;
-canvas.height = 576;
+//original value:1024
+//height original value: 576
+canvas.width = 2024;
+canvas.height = 1576;
 
 const collisionsMap = [];
 for (let i = 0; i < collisions2.length; i += 70) {
@@ -31,8 +33,8 @@ console.log(charactersMap)
 const boundaries = [];
 //Player sprite starting position coordinates
 const offset = {
-  x: -735,
-  y: -650,
+  x: 735,
+  y: 650,
 };
 
 collisionsMap.forEach((row, i) => {
