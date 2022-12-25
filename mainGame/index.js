@@ -33,8 +33,8 @@ console.log(charactersMap)
 const boundaries = [];
 //Player sprite starting position coordinates
 const offset = {
-  x: 735,
-  y: 650,
+  x: -230,
+  y: -110,
 };
 
 collisionsMap.forEach((row, i) => {

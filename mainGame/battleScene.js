@@ -1,34 +1,27 @@
 //This code block creates a sprite and gives it the coordinates of where to start in the browser.
 const battleBackgroundImage = new Image();
 battleBackgroundImage.src = "./img/battleBackground.png";
+// battleBackgroundImage.width = window.visualViewport.width
+// battleBackgroundImage.height = window.visualViewport.height
+console.log(window.visualViewport)
 const battleBackground = new Sprite({
   position: {
-    x: 0,
-    y: 0,
+    x: window.visualViewport.pageLeft,
+    y: window.visualViewport.pageTop,
   },
   image: battleBackgroundImage,
 });
 
+battleBackground.image.width = window.visualViewport.width
+
+battleBackground.width = window.visualViewport.width
+battleBackground.height = window.visualViewport.height
 
 let draggle
 let emby
 let renderedSprites
 let battleAnimationId
 let queue
-// console.log(emby)
-// console.log(draggle)
-
-// function debounce(cb, delay = 1000){
-//   let timeout
-
-//   //debounce waits one second before it the function fires
-//   return(...args) => {
-//       clearTimeout(timeout)
-//       timeout = setTimeout(() => {
-//           cb(...args)
-//       }, delay)
-//   }
-// }
 
 function initBattle()  {
 document.querySelector('#userInterface').style.display = 'block'
@@ -76,9 +69,6 @@ emby.attacks.forEach((attack) =>{
    queue.push(() => {
      console.log(draggle.position.y)
      draggle.faint()
-     // draggle.draggleBattlePosition()
-     //I left off here, made this custom function.
-     // draggle.position.y - 20
      })
 
    queue.push(() => {
@@ -97,9 +87,6 @@ emby.attacks.forEach((attack) =>{
        }
      })
    })
-  
-   ///SOMEWHAT DONE? draggle shifts down and shifts up on final attack. Watch video
-   // })  
  }   
 
 //draggle or enemy attack options?
@@ -146,7 +133,6 @@ if(emby.health <= 0){
                       }, 500));
 
 //button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
-
 button.addEventListener('mouseenter', (e) => {
     const selectedAttack = attacks[e.currentTarget.innerHTML]
     document.querySelector('#attackType').innerHTML = selectedAttack.type
@@ -154,13 +140,15 @@ button.addEventListener('mouseenter', (e) => {
 })
 })
 }
-// console.log(emby)
-// console.log(draggle)
-// console.log(renderedSprites)
 
 function animateBattle() {
+  // console.log(window.visualViewport)
+  battleBackground.position.x = window.visualViewport.pageLeft
+  battleBackground.position.y = window.visualViewport.pageTop
+
   battleAnimationId = window.requestAnimationFrame(animateBattle);
   battleBackground.draw();
+
   
   renderedSprites.forEach((sprite) => {
     sprite.draw()
