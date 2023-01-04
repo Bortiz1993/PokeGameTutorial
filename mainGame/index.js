@@ -4,11 +4,19 @@ const c = canvas.getContext("2d");
 // bodyBlack.style.background = "black";
 
 
+
 // Canvas Dimensions
 //original value:1024
 //height original value: 576
 canvas.width = 2024;
 canvas.height = 1576;
+
+window.scrollTo(500, 400)
+
+
+document.getElementById('characterDialogueWrapper').style.paddingTop = '1000px'
+document.getElementById('characterDialogueWrapper').style.paddingLeft = '500px'
+
 
 const collisionsMap = [];
 for (let i = 0; i < collisions2.length; i += 70) {
@@ -509,7 +517,7 @@ window.addEventListener("keydown", (e) => {
       //beginning of NPC conversation
       const firstMessage = player.interactionAsset.dialogue[0]
       document.querySelector('#characterDialogueBox').innerHTML = firstMessage
-      document.querySelector('#characterDialogueBox').style.display = 'flex'
+      document.querySelector('#characterDialogueBox').style.display = 'inline-block'
       player.isInteracting = true
       break
 

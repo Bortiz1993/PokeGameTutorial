@@ -61,31 +61,37 @@
            ">
            </div>
            
-        
+        <div id="characterDialogueWrapper" style="
+         position: absolute; ">
+            <div
+            id="characterDialogueBox"
+            style="
+            background-color: white;
+            height: 140px;
+            width: 98vw;
+            position:absolute;
+            /* top: 200; */
+            /* left: 0; */
+            /* right: 0; */
+            border: 4px black solid;
+            display: none;
+            padding: 12px;
+            "  > Hello Andrew</div>
+        </div>
     <canvas id="canvas"></canvas>
     <!-- NPC dialogue Box -->
-           <div
-           id="characterDialogueBox"
-           style="
-           background-color: white;
-           height: 140px;
-           position:absolute;
-           bottom: 0;
-           left: 0;
-           right: 0;
-           border-top: 4px black solid;
-           display: none;
-           padding: 12px;
-           "  ></div>
-
+          
+   
     <div id="userInterface" style="display: none;">
+        <!-- TODO -->
+        <!-- need wrapper div, it will allow us to add padding, similar to the first dialogue box, change original positions of the monsters and original position of the battle background  -->
         <!-- Represents Health bar of draggle --->
         <div style="
         background-color:white;
         width:250px;
         position: absolute;
-        top:50px;
-        left: 50px;
+        top: 500px;
+        left: 1150px;
         border: 4px black solid;
         padding: 12px;">
 
@@ -113,8 +119,8 @@ style="
 background-color:white;
 width:250px;
 position: absolute;
-top: 350px;
-left: 700px;
+top: 800px;
+left: 1700px;
 border: 4px black solid;
 padding: 12px;">
 
@@ -138,48 +144,53 @@ right: 0;
 </div>
 </div>
 
+    <!-- I think this Div contains the whole attack box and dialogue during battle -->
+    <div id="userInterfaceWrapper" style="position: absolute;">
 
-    <div style="
-    background-color: white;
-    height: 140px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    border-top: 4px black solid;
-    display: flex;"
-    >
-    <div id="dialogueBox" 
-    style="position:sticky;
-     top: 0;
-      right:0;
-       bottom: 0;
-        left:0;
-     background-color:white;
-    padding: 12px; 
-     display: none;
-     cursor: pointer;
-      ">Hello this is my poke game</div>
-    <div
-    id="attacksBox" 
-    style="
-        width: 66.66%;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);">
-       
-        <!-- <button type="button" title="Attack3">Attack3</button>
-        <button type="button" title="Attack4">Attack4</button> -->
+        <div style="
+        background-color: white;
+        height: 140px;
+        width: 98vw;
+        position: absolute;
+        /* bottom: 0; */
+        left: 100px;
+        /* right: 0; */
+        border-top: 4px black solid;
+        display: flex;"
+        >
+        <div id="dialogueBox" 
+        style="position:absolute;
+         top: 50;
+          right:0;
+           bottom: 0;
+            left:0;
+         background-color:white;
+        padding: 12px; 
+         display: none;
+         cursor: pointer;
+          ">Hello this is my poke game</div>
+        <div
+        id="attacksBox" 
+        style="
+            width: 66.66%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);">
+           
+            <!-- <button type="button" title="Attack3">Attack3</button>
+            <button type="button" title="Attack4">Attack4</button> -->
+        </div>
+        <div style="display: flex;
+         align-items:center;
+         justify-content: center;
+         width: 33.33%;
+         border-left:4px black solid;"
+         >
+            <h1 id="attackType"
+            style="font-size: 16px;">Attack Type</h1>
+        </div>
     </div>
-    <div style="display: flex;
-     align-items:center;
-     justify-content: center;
-     width: 33.33%;
-     border-left:4px black solid;"
-     >
-        <h1 id="attackType"
-        style="font-size: 16px;">Attack Type</h1>
     </div>
-</div>
+   
 </div>
 </div>
 
