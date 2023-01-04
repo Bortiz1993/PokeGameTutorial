@@ -158,8 +158,8 @@ function animateBattle() {
 }
 
 animate();
-initBattle();
-animateBattle();
+// initBattle();
+// animateBattle();
 
 
 ///an event listener for the dialogue box.
