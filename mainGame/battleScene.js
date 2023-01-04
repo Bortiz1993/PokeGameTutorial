@@ -1,6 +1,6 @@
 //This code block creates a sprite and gives it the coordinates of where to start in the browser.
 const battleBackgroundImage = new Image();
-battleBackgroundImage.src = "./img/battleBackground.png";
+battleBackgroundImage.src = "./img/GreenForestBattle.png";
 const battleBackground = new Sprite({
   position: {
     x: window.visualViewport.pageLeft,

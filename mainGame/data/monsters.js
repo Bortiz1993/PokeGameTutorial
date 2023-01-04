@@ -3,7 +3,7 @@ const monsters = {
     Emby: {
         position: {
           x: 950,
-          y: 850,
+          y: 890,
         },
         image: {
           src: './img/embySprite.png'
@@ -19,8 +19,8 @@ const monsters = {
 
       Draggle: {
             position: {
-              x: 1700,
-              y: 550,
+              x: 1500,
+              y: 670,
             },
             image: {
               src: './img/draggleSprite.png'
