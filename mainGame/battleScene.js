@@ -1,13 +1,14 @@
 //This code block creates a sprite and gives it the coordinates of where to start in the browser.
 const battleBackgroundImage = new Image();
-battleBackgroundImage.src = "./img/battleBackground.png";
+battleBackgroundImage.src = "./img/GreenForestBattle.png";
 const battleBackground = new Sprite({
   position: {
-    x: 0,
-    y: 0,
+    x: window.visualViewport.pageLeft,
+    y: window.visualViewport.pageTop,
   },
   image: battleBackgroundImage,
 });
+console.log(window.visualViewport)
 
 
 let draggle
@@ -15,6 +16,9 @@ let emby
 let renderedSprites
 let battleAnimationId
 let queue
+
+// console.log(emby)
+// console.log(draggle)
 
 function initBattle()  {
 document.querySelector('#userInterface').style.display = 'block'
@@ -134,9 +138,11 @@ button.addEventListener('mouseenter', (e) => {
 })
 }
 
+///figure out where the position of the monster sprites?
+
 function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
-  battleBackground.draw();
+  battleBackground.draw(window.visualViewport.width, window.visualViewport.height, 8, 8);
   
   renderedSprites.forEach((sprite) => {
     sprite.draw()

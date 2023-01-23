@@ -25,8 +25,8 @@ class Sprite {
       this.scale = scale
      
     }
-    //this is the code that I need to use to draw something in the canvas.
-    draw() {
+    //this is the code that I need to use to draw something in the canvas. Lime placed 4 parameters. Height and Width are connected to the battlebackground image positions and the Offsets are connected to the first Background image in the canvas.
+    draw( width, height, xOffset = 0, yOffset = 0) {
       c.save()
       c.translate(
       this.position.x + this.width / 2, 
@@ -42,12 +42,12 @@ class Sprite {
         this.image,
         this.frames.val * this.width,
         0,
-        this.image.width / this.frames.max,
-        this.image.height,
-        this.position.x,
-        this.position.y,
-        this.image.width / this.frames.max,
-        this.image.height
+         this.image.width / this.frames.max,
+         this.image.height,
+        this.position.x - xOffset,
+        this.position.y - yOffset,
+         width  || this.image.width / this.frames.max,
+        height || this.image.height
       )
       c.restore()
       //all of this code below animates a sprite sheet.
@@ -113,11 +113,6 @@ class Sprite {
         audio.victory.play()
         }
         
-        // draggleBattlePosition(){
-        //   gsap.to(this.position, {
-        //     y: this.position.y - 20
-        //   })
-        // }
 
         //code for the dialogue box
         attack({attack, recipient, renderedSprites}){
