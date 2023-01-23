@@ -102,6 +102,7 @@ charactersMap.forEach((row, i) => {
           },
           scale: 1,
           animate: true,
+          //conversations: [{},{}]
           dialogue: [
         'GARY: Hello Andrew!', ' Be on the look out for a creature named Draggle!', 'I heard it has a crazy ice attack!']
         })
@@ -118,9 +119,10 @@ charactersMap.forEach((row, i) => {
           image: oldManImg,
           frames: {
             max: 4,
-            hold: 10
+            hold: 200
           },
-          scale: 3,
+          scale: 1,
+          animate: true,
           dialogue: ['OLD MAN: My back hurts!', 'Yeah I know I am old:(', 'The Draggle is scared of a RED attack but I cant remember what it was called?']
         })
       )
@@ -275,8 +277,6 @@ function animate() {
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
-      // if(battleZone.battle){
-      ///make hardcoded if statements for the battle being initiated.maybe put BigPatch in one variable and Small patch in another?
       const overlappingArea =
         (Math.min(
           player.position.x + player.width,
@@ -485,7 +485,7 @@ function animate() {
       });
   }
 }
-
+//TODO FIGURE OUT HOW TO ADD MORE DIALOGUE
 let lastKey = ''
 window.addEventListener("keydown", (e) => {
   if (player.isInteracting) {
