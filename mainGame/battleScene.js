@@ -16,9 +16,9 @@ let emby
 let renderedSprites
 let battleAnimationId
 let queue
+
 // console.log(emby)
 // console.log(draggle)
-
 
 function initBattle()  {
 document.querySelector('#userInterface').style.display = 'block'
@@ -146,7 +146,6 @@ if(emby.health <= 0){
                       }, 500));
 
 //button and attack action functionality. Grabs all buttons, place objects inside of this button.{attack buttons}
-
 button.addEventListener('mouseenter', (e) => {
     const selectedAttack = attacks[e.currentTarget.innerHTML]
     document.querySelector('#attackType').innerHTML = selectedAttack.type
@@ -154,9 +153,6 @@ button.addEventListener('mouseenter', (e) => {
 })
 })
 }
-// console.log(emby)
-// console.log(draggle)
-// console.log(renderedSprites)
 
 ///figure out where the position of the monster sprites?
 
