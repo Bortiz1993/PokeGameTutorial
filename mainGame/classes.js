@@ -112,6 +112,10 @@ class Sprite {
         audio.battle.stop()
         audio.victory.play()
         }
+
+        // embyDies(){
+        //   document.querySelector('#text').innerHTML = this.name + ' Has been Defeated!'
+        // }
         
 
         //code for the dialogue box

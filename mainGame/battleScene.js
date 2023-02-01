@@ -61,14 +61,11 @@ emby.attacks.forEach((attack) =>{
    recipient: draggle,
    renderedSprites
  })
-
+//if draggle gets defeated, do this?
  if(draggle.health <= 0) {
    queue.push(() => {
      console.log(draggle.position.y)
      draggle.faint()
-     // draggle.draggleBattlePosition()
-     //I left off here, made this custom function.
-     // draggle.position.y - 20
      })
 
    queue.push(() => {
@@ -93,32 +90,48 @@ emby.attacks.forEach((attack) =>{
 const randomAttack =
 draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
 
+randomAttack.damage = 80
 queue.push(() => {
 draggle.attack({
    attack: randomAttack,
    recipient: emby,
    renderedSprites
 })
-
+//if emby dies, do this?
 if(emby.health <= 0){
  queue.push(() => {
-   emby.faint()
- })
- queue.push(() => {
-   //fades back to black
-   gsap.to('#overlappingDIV', {
-     opacity: 1,
-     onComplete: () => {
-       cancelAnimationFrame(battleAnimationId)
-       animate()
-       document.querySelector('#userInterface').style.display = 'none'
-       gsap.to('#overlappingDIV', {
-         opacity: 0
-       })
-       battle.initiated = false
-       audio.Map.play()
-     }
-   })
+  emby.faint()
+    //fades back to black
+    gsap.to('#overlappingGameOver', {
+      opacity: 1,
+      onComplete: () => {
+        cancelAnimationFrame(battleAnimationId)
+        // embyDies()
+        // animate()
+       
+        gsap.to('#userInterface', {
+          opacity: 0
+        })
+        document.querySelector('#text').innerHTML = monsters.Emby.name + ' has been defeated!'
+        
+        gsap.to('#overlappingGameOver', {
+          opacity: 1
+        })
+        battle.initiated = false
+        // audio.Map.play()
+      }
+    })
+//    var current = window.location.href
+//    console.log(current)
+//    var path = current.split('mainGame')
+//    setTimeout(() => {
+//     window.location.href = `${path[0]}/mainGame/end.html`
+//    }, 500)
+  
+//  })
+// //  queue.push(() => {
+
+  
  })
 }
 })
