@@ -136,7 +136,7 @@ if(emby.health <= 0){
         gameoverLayer.style.alignItems = 'center'
 
         // gsap.to('#overlappingGameOver', {
-        //   opacity: 1
+        //   opacity: 0
         // })
         battle.initiated = false
         // audio.Map.play()

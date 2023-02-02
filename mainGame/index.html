@@ -42,14 +42,15 @@
 </head>
 
 <body>
+<!-- <h1>Hello world</h1> -->
+<!-- <img alt="newSprite" src="../images/newSpriteSheet.png"> -->
 
 <div style="
     display: inline-block;
     position: relative;">
     <div
     id="overlappingDIV"
-    style="
-    background-color: black;
+    style="background-color: black;
      position: absolute;
       top:0;
        right: 0;
@@ -59,7 +60,6 @@
            pointer-events: none;
            z-index: 10;
            ">
-           
            </div>
            
         <div id="characterDialogueWrapper" style="
@@ -67,7 +67,7 @@
             <div
             id="characterDialogueBox"
             style="
-            background-color: black;
+            background-color: white;
             height: 140px;
             width: 98vw;
             position:absolute;
@@ -77,23 +77,39 @@
             border: 4px black solid;
             display: none;
             padding: 12px;
-            "  > </div>
+            "  > Hello Andrew</div>
 
-</div>
+<!-- <div id="overlappingGameOver"
+style="background-color: black;
+width: 200px;
+height: 200px;
+position: absolute;
+ /* top:0; */
+  /* right: 0; */
+   /* left:0; */
+    /* bottom: 0; */
+     opacity: 0;
+      pointer-events: none;
+      z-index: 10;"
+> 
+< <div id="text" style="
+/* border: 2px solid red; */
+/* color:blue; */
+/* position: absolute; */
+">
+
+</div> -->
+<!-- <div id= 'text' style="color: white;"></div> -->
+<!-- </div> -->
         </div>
-       
+
        
       
 
-
+        <div id="gameover" style="display: none;"></div>
     <canvas id="canvas"></canvas>
     <!-- NPC dialogue Box -->
-    <div id="gameover" style="display: none;
-    
-    ">
 
-    </div>
- 
           
    
     <div id="userInterface" style="display: none;">
