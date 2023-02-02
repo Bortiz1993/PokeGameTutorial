@@ -4,7 +4,7 @@ battleBackgroundImage.src = "./img/GreenForestBattle.png";
 const battleBackground = new Sprite({
   position: {
     x: window.visualViewport.pageLeft,
-    y: window.visualViewport.pageTop,
+    y: window.visualViewport.pageTop - 20,
   },
   image: battleBackgroundImage,
 });
@@ -102,31 +102,52 @@ if(emby.health <= 0){
  queue.push(() => {
   emby.faint()
     //fades back to black
-    gsap.to('#overlappingGameOver', {
+    gsap.to('#gameover', {
       opacity: 1,
+      yoyo: true,
       onComplete: () => {
         cancelAnimationFrame(battleAnimationId)
-        // embyDies()
         // animate()
-       
         gsap.to('#userInterface', {
           opacity: 0
         })
-        document.querySelector('#text').innerHTML = monsters.Emby.name + ' has been defeated!'
-        
-        gsap.to('#overlappingGameOver', {
-          opacity: 1
+        document.querySelector('#userInterface').style.display = 'none'
+        gsap.to('#canvas', {
+          opacity: 0
         })
+
+        // gsap.to('#overlappingDIV',{
+        //   opacity: 0
+        // })
+  
+        document.querySelector('#canvas').remove()
+        document.querySelector('#gameover').style.display = 'flex'
+        document.querySelector('#gameover').innerHTML = monsters.Emby.name + " has faded into nothing, "
+         + "\n"+ "try again?"
+        var gameoverLayer = document.querySelector('#gameover')
+        gameoverLayer.style.width = `${window.innerWidth}px`
+        gameoverLayer.style.height = `${window.innerHeight}px`
+        gameoverLayer.style.background = 'green'
+        gameoverLayer.style.top = `${window.visualViewport.pageTop}px`
+        gameoverLayer.style.left = `${window.visualViewport.pageLeft}px`
+        gameoverLayer.style.position = 'absolute'
+        // gameoverLayer.style.border = 'solid white 10px'
+        gameoverLayer.style.justifyContent = 'center'
+        gameoverLayer.style.alignItems = 'center'
+
+        // gsap.to('#overlappingGameOver', {
+        //   opacity: 1
+        // })
         battle.initiated = false
         // audio.Map.play()
       }
     })
-//    var current = window.location.href
-//    console.log(current)
-//    var path = current.split('mainGame')
-//    setTimeout(() => {
-//     window.location.href = `${path[0]}/mainGame/end.html`
-//    }, 500)
+  //  var current = window.location.href
+  //  console.log(current)
+  //  var path = current.split('mainGame')
+  //  setTimeout(() => {
+  //   window.location.href = `${path[0]}mainGame/end.html`
+  //  }, 500)
   
 //  })
 // //  queue.push(() => {

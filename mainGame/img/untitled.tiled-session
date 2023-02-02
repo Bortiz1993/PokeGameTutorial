@@ -34,8 +34,12 @@
             "scaleInEditor": 1
         },
         "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/pokemonStyleGameTileset.tsx": {
+            "dynamicWrapping": false,
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/postApoSheet.tsx": {
+            "dynamicWrapping": false
         }
     },
     "last.exportedFilePath": "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset",
