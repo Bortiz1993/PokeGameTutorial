@@ -80,6 +80,19 @@ emby.attacks.forEach((attack) =>{
            opacity: 0
          })
          battle.initiated = false
+         //checks a specif area in the array in collisions2, it starts on the 200 number and stops at the 250 number(0)
+        //  for (let i = 0; i < 1500; i++){
+        //   if (collisions2[i] == 1000){
+        //     console.log(i)
+        //   }
+        //   else{
+        //     console.log(collisions2[i])
+        //   }
+        //  }
+          // collisions2[801] = 0
+          // collisions2[802] = 0
+        
+        
          audio.Map.play()
        }
      })
@@ -101,10 +114,11 @@ draggle.attack({
 if(emby.health <= 0){
  queue.push(() => {
   emby.faint()
-    //fades back to black
+    //fades to game over screen
     gsap.to('#gameover', {
       opacity: 1,
-      yoyo: true,
+      // yoyo: true,
+      // repeat: 5,
       onComplete: () => {
         cancelAnimationFrame(battleAnimationId)
         // animate()
@@ -112,48 +126,58 @@ if(emby.health <= 0){
           opacity: 0
         })
         document.querySelector('#userInterface').style.display = 'none'
-        gsap.to('#canvas', {
-          opacity: 0
-        })
-
-        // gsap.to('#overlappingDIV',{
+        // gsap.to('#canvas', {
         //   opacity: 0
         // })
+
+        gsap.to('#gameover',{
+          opacity: 0,
+          yoyo:true,
+          repeat:5
+        })
   
         document.querySelector('#canvas').remove()
         document.querySelector('#gameover').style.display = 'flex'
-        document.querySelector('#gameover').innerHTML = monsters.Emby.name + " has faded into nothing, "
-         + "\n"+ "try again?"
         var gameoverLayer = document.querySelector('#gameover')
         gameoverLayer.style.width = `${window.innerWidth}px`
         gameoverLayer.style.height = `${window.innerHeight}px`
+        
         gameoverLayer.style.background = 'green'
-        gameoverLayer.style.top = `${window.visualViewport.pageTop}px`
-        gameoverLayer.style.left = `${window.visualViewport.pageLeft}px`
+        gameoverLayer.style.top = `${window.visualViewport.pageTop - 20}px`
+        gameoverLayer.style.left = `${window.visualViewport.pageLeft - 9}px`
         gameoverLayer.style.position = 'absolute'
         // gameoverLayer.style.border = 'solid white 10px'
         gameoverLayer.style.justifyContent = 'center'
         gameoverLayer.style.alignItems = 'center'
+         
+        var gameOverText = document.querySelector('#gameOverText')
+        gameOverText.innerHTML = monsters.Emby.name + " has faded into nothing,"
+         gameOverText.style.border = 'solid 2px red'
+         gameOverText.style.display = 'block'
+         var current = window.location.href
+         console.log(current)
+         var anchorGameOver = document.createElement('a')
+         anchorGameOver.href = "./index.html"
+         anchorGameOver.innerHTML = 'Try again?'
+         gameOverText.append(anchorGameOver)
+        //  var path = current.split('mainGame')
+        //  setTimeout(() => {
+        //   window.location.href = `${path[0]}mainGame/index.html`
+        //  }, 500)
+        
 
-        // gsap.to('#overlappingGameOver', {
-        //   opacity: 0
-        // })
         battle.initiated = false
         // audio.Map.play()
       }
-    })
-  //  var current = window.location.href
-  //  console.log(current)
-  //  var path = current.split('mainGame')
-  //  setTimeout(() => {
-  //   window.location.href = `${path[0]}mainGame/end.html`
-  //  }, 500)
-  
-//  })
-// //  queue.push(() => {
-
+      
+    }
+    )
+ 
   
  })
+//  queue.push(() => {
+  
+//  })
 }
 })
 }

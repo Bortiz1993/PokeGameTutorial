@@ -39,7 +39,9 @@
             "scaleInEditor": 1
         },
         "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/postApoSheet.tsx": {
-            "dynamicWrapping": false
+            "dynamicWrapping": false,
+            "scaleInDock": 0.5,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset",
@@ -55,6 +57,7 @@
     ],
     "project": "untitled.tiled-project",
     "recentFiles": [
+        "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/postApoSheet.tsx",
         "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/Pellet Town.tmx",
         "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/PelletTownSheet.tsx",
         "C:/Users/Yusei Fudo/development/bryan-university/PracticeCode/PokeGameTutorial/tileAsset/collisionTileset.tsx",
