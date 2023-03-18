@@ -141,8 +141,6 @@ if(symbol !== 0){
   })
 })
 
-
-
 const image = new Image();
 image.src = "./img/ChrisImages/pelletTown.png";
 console.log(image)

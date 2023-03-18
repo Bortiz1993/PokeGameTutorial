@@ -4,7 +4,7 @@ battleBackgroundImage.src = "./img/GreenForestBattle.png";
 const battleBackground = new Sprite({
   position: {
     x: window.visualViewport.pageLeft,
-    y: window.visualViewport.pageTop,
+    y: window.visualViewport.pageTop - 20,
   },
   image: battleBackgroundImage,
 });
@@ -61,7 +61,7 @@ emby.attacks.forEach((attack) =>{
    recipient: draggle,
    renderedSprites
  })
-
+//if draggle gets defeated, do this?
  if(draggle.health <= 0) {
    queue.push(() => {
      console.log(draggle.position.y)
@@ -80,6 +80,19 @@ emby.attacks.forEach((attack) =>{
            opacity: 0
          })
          battle.initiated = false
+         //checks a specif area in the array in collisions2, it starts on the 200 number and stops at the 250 number(0)
+        //  for (let i = 0; i < 1500; i++){
+        //   if (collisions2[i] == 1000){
+        //     console.log(i)
+        //   }
+        //   else{
+        //     console.log(collisions2[i])
+        //   }
+        //  }
+          // collisions2[801] = 0
+          // collisions2[802] = 0
+        
+        
          audio.Map.play()
        }
      })
@@ -90,33 +103,81 @@ emby.attacks.forEach((attack) =>{
 const randomAttack =
 draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)]
 
+randomAttack.damage = 80
 queue.push(() => {
 draggle.attack({
    attack: randomAttack,
    recipient: emby,
    renderedSprites
 })
-
+//if emby dies, do this?
 if(emby.health <= 0){
  queue.push(() => {
-   emby.faint()
+  emby.faint()
+    //fades to game over screen
+    gsap.to('#gameover', {
+      opacity: 1,
+      // yoyo: true,
+      // repeat: 5,
+      onComplete: () => {
+        cancelAnimationFrame(battleAnimationId)
+        // animate()
+        gsap.to('#userInterface', {
+          opacity: 0
+        })
+        document.querySelector('#userInterface').style.display = 'none'
+        // gsap.to('#canvas', {
+        //   opacity: 0
+        // })
+
+        gsap.to('#gameover',{
+          opacity: 0,
+          yoyo:true,
+          repeat:5
+        })
+  
+        document.querySelector('#canvas').remove()
+        document.querySelector('#gameover').style.display = 'flex'
+        var gameoverLayer = document.querySelector('#gameover')
+        gameoverLayer.style.width = `${window.innerWidth}px`
+        gameoverLayer.style.height = `${window.innerHeight}px`
+        
+        gameoverLayer.style.background = 'green'
+        gameoverLayer.style.top = `${window.visualViewport.pageTop - 20}px`
+        gameoverLayer.style.left = `${window.visualViewport.pageLeft - 9}px`
+        gameoverLayer.style.position = 'absolute'
+        // gameoverLayer.style.border = 'solid white 10px'
+        gameoverLayer.style.justifyContent = 'center'
+        gameoverLayer.style.alignItems = 'center'
+         
+        var gameOverText = document.querySelector('#gameOverText')
+        gameOverText.innerHTML = monsters.Emby.name + " has faded into nothing,"
+         gameOverText.style.border = 'solid 2px red'
+         gameOverText.style.display = 'block'
+         var current = window.location.href
+         console.log(current)
+         var anchorGameOver = document.createElement('a')
+         anchorGameOver.href = "./index.html"
+         anchorGameOver.innerHTML = 'Try again?'
+         gameOverText.append(anchorGameOver)
+        //  var path = current.split('mainGame')
+        //  setTimeout(() => {
+        //   window.location.href = `${path[0]}mainGame/index.html`
+        //  }, 500)
+        
+
+        battle.initiated = false
+        // audio.Map.play()
+      }
+      
+    }
+    )
+ 
+  
  })
- queue.push(() => {
-   //fades back to black
-   gsap.to('#overlappingDIV', {
-     opacity: 1,
-     onComplete: () => {
-       cancelAnimationFrame(battleAnimationId)
-       animate()
-       document.querySelector('#userInterface').style.display = 'none'
-       gsap.to('#overlappingDIV', {
-         opacity: 0
-       })
-       battle.initiated = false
-       audio.Map.play()
-     }
-   })
- })
+//  queue.push(() => {
+  
+//  })
 }
 })
 }

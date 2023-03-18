@@ -111,9 +111,8 @@ class Sprite {
         })
         audio.battle.stop()
         audio.victory.play()
-        }
+        }        
         
-
         //code for the dialogue box
         attack({attack, recipient, renderedSprites}){
           document.querySelector('#dialogueBox').style.display = 'block'
