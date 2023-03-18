@@ -4,11 +4,19 @@ const c = canvas.getContext("2d");
 // bodyBlack.style.background = "black";
 
 
+
 // Canvas Dimensions
 //original value:1024
 //height original value: 576
 canvas.width = 2024;
 canvas.height = 1576;
+
+window.scrollTo(500, 400)
+
+
+document.getElementById('characterDialogueWrapper').style.paddingTop = '1000px'
+document.getElementById('characterDialogueWrapper').style.paddingLeft = '500px'
+
 
 const collisionsMap = [];
 for (let i = 0; i < collisions2.length; i += 70) {
@@ -94,6 +102,7 @@ charactersMap.forEach((row, i) => {
           },
           scale: 1,
           animate: true,
+          //conversations: [{},{}]
           dialogue: [
         'GARY: Hello Andrew!', ' Be on the look out for a creature named Draggle!', 'I heard it has a crazy ice attack!']
         })
@@ -110,9 +119,10 @@ charactersMap.forEach((row, i) => {
           image: oldManImg,
           frames: {
             max: 4,
-            hold: 10
+            hold: 200
           },
-          scale: 3,
+          scale: 1,
+          animate: true,
           dialogue: ['OLD MAN: My back hurts!', 'Yeah I know I am old:(', 'The Draggle is scared of a RED attack but I cant remember what it was called?']
         })
       )
@@ -130,8 +140,6 @@ if(symbol !== 0){
 }
   })
 })
-
-
 
 const image = new Image();
 image.src = "./img/ChrisImages/pelletTown.png";
@@ -267,8 +275,6 @@ function animate() {
   if (keys.w.pressed || keys.a.pressed || keys.d.pressed || keys.s.pressed) {
     for (let i = 0; i < battleZones.length; i++) {
       const battleZone = battleZones[i];
-      // if(battleZone.battle){
-      ///make hardcoded if statements for the battle being initiated.maybe put BigPatch in one variable and Small patch in another?
       const overlappingArea =
         (Math.min(
           player.position.x + player.width,
@@ -477,7 +483,7 @@ function animate() {
       });
   }
 }
-
+//TODO FIGURE OUT HOW TO ADD MORE DIALOGUE
 let lastKey = ''
 window.addEventListener("keydown", (e) => {
   if (player.isInteracting) {
@@ -509,7 +515,7 @@ window.addEventListener("keydown", (e) => {
       //beginning of NPC conversation
       const firstMessage = player.interactionAsset.dialogue[0]
       document.querySelector('#characterDialogueBox').innerHTML = firstMessage
-      document.querySelector('#characterDialogueBox').style.display = 'flex'
+      document.querySelector('#characterDialogueBox').style.display = 'inline-block'
       player.isInteracting = true
       break
 
