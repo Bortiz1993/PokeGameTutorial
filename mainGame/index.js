@@ -44,6 +44,7 @@ const offset = {
   x: -230,
   y: -110,
 };
+///try to figure out how to send the changes to the netlify app
 
 collisionsMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
